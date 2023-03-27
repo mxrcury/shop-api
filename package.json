@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "",
+    "start": "yarn build && node build/app.js",
     "build": "tsc",
     "dev": "nodemon ./src/app.ts",
     "debug": "yarn build && node --inspect build/app.js"
