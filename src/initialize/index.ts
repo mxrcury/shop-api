@@ -38,7 +38,7 @@ const start = async (app: express.Express, port: string | number = 7000) => {
         })
         console.log(`Successfully connected to MongoDB `)
         
-        app.listen(port, () => console.log(`Server started on http://localhost:${port}`))
+        app.listen(port, () => console.log(`Server started on ${app.request.protocol}://${app.request.get('host')}:${port}`))
         
     } catch (error) {
         console.log(error)
