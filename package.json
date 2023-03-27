@@ -55,5 +55,8 @@
     "nodemon": "^2.0.21",
     "prettier": "^2.8.4",
     "ts-node": "^10.9.1"
+  },
+  "engines": {
+    "node":">=18"
   }
 }
