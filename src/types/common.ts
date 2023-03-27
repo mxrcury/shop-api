@@ -1,0 +1,1 @@
+export type RestFields<T> = { [key:string]: T}
