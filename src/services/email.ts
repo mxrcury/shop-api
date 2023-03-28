@@ -7,11 +7,11 @@ class EmailService {
   
   private async initialize(): Promise<void> {
     this.transporter = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 25,
+      host: process.env.EMAIL_HOST,
+      port: +process.env.EMAIL_PORT,
       auth: {
-        user: "e446a99ad117b7",
-        pass: "df2eaf950dcce9"
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
       }
     })
     return

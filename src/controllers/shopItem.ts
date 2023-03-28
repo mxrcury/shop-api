@@ -2,6 +2,7 @@ import express from 'express';
 import ShopItemService from '../services/shopItem'
 import { ControllerRequest, ControllerResponse, ItemsResponse } from '../types/controllers';
 import { User } from '../models/user';
+import { ShopItem } from '../entities/shopItems.entity';
 
 
 class ShopItemController {
@@ -14,6 +15,15 @@ class ShopItemController {
             totalCounts
         })
     }
+    
+    async getOne (req: ControllerRequest, res: express.Response<ShopItem>): ControllerResponse<ShopItem> {
+        const { id } = req.params
+
+        const shopItem = await ShopItemService.getShopItemById(id)
+
+        return res.status(200).send(shopItem)
+    }
+
     async create(
         req: express.Request<any, any>,
         res: express.Response

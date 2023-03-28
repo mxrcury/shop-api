@@ -9,7 +9,7 @@ const usersRouter = express.Router()
 usersRouter.get('/', asyncWrapper(UsersController.getAll))
 usersRouter.get('/:id', asyncWrapper(UsersController.getOne))
 usersRouter.post('/update-my-profile', asyncWrapper(UsersController.updateMyProfile))
-usersRouter.delete('/delete-my-profile', asyncWrapper(UsersController.deleteMyProfile))
+usersRouter.post('/delete-my-profile', asyncWrapper(UsersController.deleteMyProfile))
 
 usersRouter.use(rightsValidation(Roles.Admin))
 

@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { User } from "../entities/user.entity"
 
 export interface LoginInput {
@@ -8,7 +9,7 @@ export interface LoginInput {
 export interface PasswordsInput { 
     currentPassword:string, 
     newPassword:string, 
-    id:string
+    id:ObjectId
 }
 
 export interface UserInput extends User {

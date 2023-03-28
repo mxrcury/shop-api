@@ -1,43 +1,42 @@
+import bcrypt from 'bcrypt'
+
 import { UserModel } from '../models/user';
 import { ApiError } from '../exceptions/error';
 import { RestFields } from '../types/common'
 import filterAllowedFields from '../utils/filterAllowedFields';
-import { UsersResponse } from '../types/users';
+import { DeleteUserInput, UsersResponse } from '../types/users';
 import { User } from '../entities/user.entity';
 import { allowedFields } from '../validation/user';
 
 class UserService {
     async getUsers(page?: number, limit: number = 0): Promise<UsersResponse> {
-        if (page && typeof page !== 'number') {
-            throw ApiError.BadRequest()
-        }
         const totalCounts = await UserModel.countDocuments()
 
-        const users = (await UserModel
+        const users = await UserModel
             .find()
             .limit(limit)
             .skip(limit * (page - 1))
             .select('-password')
-            .select('-__v'))
+            .select('-role')
+            .select('-__v').lean() as User[]
 
         if (!users) {
             throw ApiError.NotFound()
         }
 
-        // mb find another solution
-        return { users: users as User[], totalCounts }
+        return { users, totalCounts }
     }
     async getUserById(id: string): Promise<User> {
         const user = await UserModel
             .findById(id)
             .select('-password')
-            .select('-__v')
+            .select('-__v') as User
 
         if (!user) {
             throw ApiError.NotFound('User not found')
         }
 
-        return user as User
+        return user
     }
 
     async updateUser(id: string, data: RestFields<any>): Promise<void> {
@@ -55,13 +54,28 @@ class UserService {
         const user = await UserModel.findByIdAndUpdate(id, filteredData)
 
         if (!user) {
-            throw ApiError.NotFound('User with such id not found')
+            throw ApiError.NotFound('User with such id not found.')
         }
 
         return
     }
 
-    async deleteUser(id: string): Promise<void> {
+    async deleteUser({ id, password }: DeleteUserInput): Promise<void> {
+        const user = await UserModel.findById(id).lean()
+        
+        if(!user) {
+            throw ApiError.NotFound('User with such ID not found.')
+        }
+
+        if(password) {
+            const isValidPassword = await bcrypt.compare(password,user.password)
+        
+            if(!isValidPassword) {
+                throw ApiError.BadRequest('You entered wrong password.')
+            }
+    
+        }
+
         await UserModel.findByIdAndDelete(id)
         return
     }

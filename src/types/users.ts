@@ -11,3 +11,5 @@ export interface UsersResponse {
     users:User[],
     totalCounts:number
 }
+
+export interface DeleteUserInput { id:string, password?:string }

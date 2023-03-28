@@ -44,8 +44,9 @@ export default new class UsersController {
 
     async deleteMyProfile(req: ControllerRequest, res: express.Response<void>): ControllerResponse<void> {
         const { id } = req.user
+        const { password } = req.body
 
-        await UsersService.deleteUser(id)
+        await UsersService.deleteUser({id, password})
 
         return res.status(201).send()
     }
@@ -53,7 +54,7 @@ export default new class UsersController {
     async deleteOne(req: express.Request, res: express.Response<void>): ControllerResponse<void> {
         const { id } = req.params
         
-        await UsersService.deleteUser(id)
+        await UsersService.deleteUser({ id })
 
         return res.status(200).send()
     }
