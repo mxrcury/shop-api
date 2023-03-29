@@ -1,10 +1,11 @@
 import { ShopItem } from '../entities/shopItems.entity';
 import { ShopItemsModel } from '../models/shopItem';
+import { ShopItemsFilterInput } from '../types/shopItem';
 
 class ShopItemService {
-    async getShopItems (page?: number, limit: number = 0): Promise<any> {
-        const shopItems = await ShopItemsModel.find().lean()
-        // TODO:add pagination
+    async getShopItems ({page = 0, limit = 0, searchFilter }:ShopItemsFilterInput): Promise<any> {
+        const shopItems = await ShopItemsModel.find(searchFilter).limit(limit).skip(limit * page).lean()
+
         const totalCounts = await ShopItemsModel.countDocuments()
         return { shopItems, totalCounts}
     }

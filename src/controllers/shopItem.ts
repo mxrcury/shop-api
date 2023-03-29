@@ -1,22 +1,29 @@
 import express from 'express';
+
 import ShopItemService from '../services/shopItem'
-import { ControllerRequest, ControllerResponse, ItemsResponse } from '../types/controllers';
+import getRegex from '../utils/getRegex';
+
 import { User } from '../models/user';
+
+import { ControllerRequest, ControllerResponse, ItemsResponse } from '../types/controllers';
 import { ShopItem } from '../entities/shopItems.entity';
 
 
 class ShopItemController {
-    async getAll (req: ControllerRequest, res: express.Response<ItemsResponse<User>>): ControllerResponse<ItemsResponse<User>> {
-        const { page, limit } = req.query
-        const { shopItems, totalCounts } = await ShopItemService.getShopItems(page, limit)
+    async getAll(req: ControllerRequest, res: express.Response<ItemsResponse<User>>): ControllerResponse<ItemsResponse<User>> {
+        const { page, limit, title } = req.query
+
+        const searchFilter = { title: getRegex(title) }
+
+        const { shopItems, totalCounts } = await ShopItemService.getShopItems({ page, limit, searchFilter })
 
         return res.status(200).send({
-            items:shopItems,
+            items: shopItems,
             totalCounts
         })
     }
-    
-    async getOne (req: ControllerRequest, res: express.Response<ShopItem>): ControllerResponse<ShopItem> {
+
+    async getOne(req: ControllerRequest, res: express.Response<ShopItem>): ControllerResponse<ShopItem> {
         const { id } = req.params
 
         const shopItem = await ShopItemService.getShopItemById(id)

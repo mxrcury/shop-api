@@ -6,7 +6,7 @@ import { RestFields } from '../types/common'
 import filterAllowedFields from '../utils/filterAllowedFields';
 import { DeleteUserInput, UsersResponse } from '../types/users';
 import { User } from '../entities/user.entity';
-import { allowedFields } from '../validation/user';
+import { allowedFields } from '../validation/body/user';
 
 class UserService {
     async getUsers(page?: number, limit: number = 0): Promise<UsersResponse> {
@@ -49,7 +49,7 @@ class UserService {
         return
     }
 
-    async updateMyProfile(id: string, data: RestFields<any>): Promise<void> {
+    async updateMe(id: string, data: RestFields<any>): Promise<void> {
         const filteredData = filterAllowedFields(data, allowedFields)
         const user = await UserModel.findByIdAndUpdate(id, filteredData)
 
