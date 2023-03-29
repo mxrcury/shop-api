@@ -9,6 +9,6 @@ export interface ShopItem {
     tags: Tag[]
     quantity: number
     createdBy: User
-    createdAt: number,
+    createdAt: Date,
     userId:string
 }

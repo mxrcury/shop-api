@@ -11,11 +11,11 @@ import { ShopItem } from '../entities/shopItems.entity';
 
 class ShopItemController {
     async getAll(req: ControllerRequest, res: express.Response<ItemsResponse<User>>): ControllerResponse<ItemsResponse<User>> {
-        const { page, limit, title } = req.query
+        const { page, limit, title, sortBy } = req.query
 
-        const searchFilter = { title: getRegex(title) }
+        const filters = { searchFilter:{ title: getRegex(title) }, sortBy }
 
-        const { shopItems, totalCounts } = await ShopItemService.getShopItems({ page, limit, searchFilter })
+        const { shopItems, totalCounts } = await ShopItemService.getShopItems({ page, limit, filters })
 
         return res.status(200).send({
             items: shopItems,

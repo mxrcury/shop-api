@@ -13,6 +13,18 @@ export interface ShopItemsResponse {
     totalCounts: number
 }
 
+export enum SortByEnums {
+    Price = 'price',
+    CreatedAt = 'createdAt',
+    Quantity = 'quantity'
+}
+
+interface SearchTitleInterface { searchFilter:{ title:RegExInterface } }
+
+interface ShopItemFilters extends SearchTitleInterface {
+    sortBy?:SortByEnums.Price | SortByEnums.CreatedAt | SortByEnums.Quantity
+}
+
 export interface ShopItemsFilterInput extends FiltersOptions {
-    searchFilter?:{ title:RegExInterface }
+    filters?:ShopItemFilters,
 }
