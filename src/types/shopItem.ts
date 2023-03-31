@@ -1,4 +1,4 @@
-import { ShopItem } from '../entities/shopItems.entity';
+import { ShopItem } from '../entities/shopItem.entity';
 import { FiltersOptions, RegExInterface } from './common';
 
 export interface CreatedByInterface {

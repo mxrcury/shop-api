@@ -8,7 +8,7 @@ export default new class UsersController {
     async getAll (req: ControllerRequest, res: express.Response<ItemsResponse<User>>): ControllerResponse<ItemsResponse<User>> {
         const { page, limit } = req.query
 
-        const { users, totalCounts } = await UsersService.getUsers(+page, +limit)
+        const { users, totalCounts } = await UsersService.getUsers({ page:parseInt(page), limit:parseInt(limit)})
         
         return res.status(200).send({
             items:users,

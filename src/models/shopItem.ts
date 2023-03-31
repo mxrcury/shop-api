@@ -35,6 +35,13 @@ class ShopItem {
     tags:Ref<Tag, string>[]
     @prop({ type: Number, required: true})
     price:number
+    @prop({ type: Number, required: true, default: 0 })
+    totalReviews: number
 }
 
 export const ShopItemsModel = getModelForClass(ShopItem)
+
+// ShopItemsModel.schema.calculateAverageRating = function(shopItemId) {
+
+// }
+

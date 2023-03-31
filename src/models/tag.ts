@@ -7,3 +7,4 @@ export class Tag {
 }
 
 export const TagModel = getModelForClass(Tag)
+

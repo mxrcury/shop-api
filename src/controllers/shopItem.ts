@@ -6,7 +6,7 @@ import getRegex from '../utils/getRegex';
 import { User } from '../models/user';
 
 import { ControllerRequest, ControllerResponse, ItemsResponse } from '../types/controllers';
-import { ShopItem } from '../entities/shopItems.entity';
+import { ShopItem } from '../entities/shopItem.entity';
 
 
 class ShopItemController {
@@ -15,7 +15,7 @@ class ShopItemController {
 
         const filters = { searchFilter:{ title: getRegex(title) }, sortBy }
 
-        const { shopItems, totalCounts } = await ShopItemService.getShopItems({ page, limit, filters })
+        const { shopItems, totalCounts } = await ShopItemService.getShopItems({ page:parseInt(page), limit:parseInt(limit), filters })
 
         return res.status(200).send({
             items: shopItems,

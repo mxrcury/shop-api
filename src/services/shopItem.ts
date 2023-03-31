@@ -1,4 +1,4 @@
-import { ShopItem } from '../entities/shopItems.entity';
+import { ShopItem } from '../entities/shopItem.entity';
 import { ShopItemsModel } from '../models/shopItem';
 import { ShopItemsFilterInput } from '../types/shopItem';
 

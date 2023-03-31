@@ -1,4 +1,5 @@
 import { User } from "../entities/user.entity"
+import { FiltersOptions } from "./common"
 
 export enum Roles {
     Admin = 'admin',
@@ -13,3 +14,5 @@ export interface UsersResponse {
 }
 
 export interface DeleteUserInput { id:string, password?:string }
+
+export interface UsersFilterInput extends FiltersOptions {}

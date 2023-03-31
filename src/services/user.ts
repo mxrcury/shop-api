@@ -4,12 +4,12 @@ import { UserModel } from '../models/user';
 import { ApiError } from '../exceptions/error';
 import { RestFields } from '../types/common'
 import filterAllowedFields from '../utils/filterAllowedFields';
-import { DeleteUserInput, UsersResponse } from '../types/users';
+import { DeleteUserInput, UsersFilterInput, UsersResponse } from '../types/users';
 import { User } from '../entities/user.entity';
 import { allowedFields } from '../validation/body/user';
 
 class UserService {
-    async getUsers(page?: number, limit: number = 0): Promise<UsersResponse> {
+    async getUsers({ page, limit = 0 }:UsersFilterInput): Promise<UsersResponse> {
         const totalCounts = await UserModel.countDocuments()
 
         const users = await UserModel
