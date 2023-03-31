@@ -1,4 +1,5 @@
 import { ShopItem } from '../entities/shopItem.entity';
+import { Tag } from '../entities/tag.entitiy';
 import { FiltersOptions, RegExInterface } from './common';
 
 export interface CreatedByInterface {
@@ -27,4 +28,14 @@ interface ShopItemFilters extends SearchTitleInterface {
 
 export interface ShopItemsFilterInput extends FiltersOptions {
     filters?:ShopItemFilters,
+}
+
+export interface ShopItemInput {
+    title:string,
+    description: string,
+    price: number,
+    tags: Tag[],
+    quantity: number,    
+    createdAt: Date,
+    userId:string
 }

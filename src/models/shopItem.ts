@@ -1,16 +1,23 @@
 import { pre, prop, Ref, getModelForClass } from "@typegoose/typegoose";
 import { User, UserModel } from './user';
 import { CreatedByInterface } from '../types/shopItem';
-import { Tag } from "./tag";
+import { Tag, TagModel } from "./tag";
+import { ReviewModel } from "./reviews";
 
 @pre<ShopItem>('save', async function (next) {
     const user = await UserModel.findById(this.userId)
-    if (user) {
-        const { firstName, lastName, email, photo } = user
-        this.createdBy = { firstName, lastName, email, photo }
-        next()
-    }
+    if(!user) return
+    const { firstName, lastName, email, photo } = user
+    this.createdBy = { firstName, lastName, email, photo }
+    this.totalReviews = await ReviewModel.countDocuments({ shopItemId:this._id })
+    console.log(this.tags)
+    this.tags = []
+    this.createdAt = (new Date()).toJSON()
+    // this.tags = this.tags.map(async (tag) => await TagModel.findOne({ name:tag.name }))
+    console.log(this.totalReviews)
+    next()
 })
+// @post<ShopItem>(/find/)
 
 class ShopItem {
     @prop({ type: String, required: true })
@@ -24,24 +31,24 @@ class ShopItem {
     @prop({
         type: Object, required: false
     })
-    createdBy:CreatedByInterface
+    createdBy: CreatedByInterface
     @prop({ type: String, required: true, ref: () => User })
     userId: Ref<User, string>
-    @prop({ type: Number, required: true })
-    createdAt: number
+    @prop({ type: Date, required: false })
+    createdAt: string
     // @prop({ type: String, required: false, ref: 'Seller' })
     // seller: string
     @prop({ type: () => String, required: false, ref: () => Tag })
-    tags:Ref<Tag, string>[]
-    @prop({ type: Number, required: true})
-    price:number
-    @prop({ type: Number, required: true, default: 0 })
+    tags: Ref<Tag, string>[]
+    @prop({ type: Number, required: true })
+    price: number
+    @prop({ type: Number, required: false, default: 0 })
     totalReviews: number
 }
 
 export const ShopItemsModel = getModelForClass(ShopItem)
 
-// ShopItemsModel.schema.calculateAverageRating = function(shopItemId) {
+// ShopItemsModel.calculateAverageRating = function (shopItemId) {
 
 // }
 

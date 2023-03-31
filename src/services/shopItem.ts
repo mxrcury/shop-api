@@ -1,6 +1,6 @@
 import { ShopItem } from '../entities/shopItem.entity';
 import { ShopItemsModel } from '../models/shopItem';
-import { ShopItemsFilterInput } from '../types/shopItem';
+import { ShopItemInput, ShopItemsFilterInput } from '../types/shopItem';
 
 class ShopItemService {
     async getShopItems({ page = 0, limit = 0, filters }: ShopItemsFilterInput): Promise<any> {
@@ -9,8 +9,8 @@ class ShopItemService {
         const totalCounts = await ShopItemsModel.countDocuments().lean()
         return { shopItems, totalCounts }
     }
-    async createShopItem({ title, createdAt, price, quantity, description, userId }: ShopItem): Promise<void> {
-        await ShopItemsModel.create({ title, createdAt, price, quantity, description, userId })
+    async createShopItem({ title, price, quantity, description, userId }: ShopItemInput): Promise<void> {
+        await ShopItemsModel.create({ title, price, quantity, description, userId })
         return
     }
     async getShopItemById(id: string): Promise<ShopItem> {

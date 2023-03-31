@@ -1,20 +1,18 @@
-import { Review } from "../entities/review.entity";
 import { ReviewModel } from "../models/reviews";
-import { FiltersOptions } from "../types/common";
-import { ReviewInput, ReviewsResponse } from "../types/review";
+import { ReviewInput, ReviewsFilters, ReviewsResponse } from "../types/review";
 
 
 class ReviewService {
-    async getReviews({ page, limit }:FiltersOptions):Promise<ReviewsResponse> {
-        const reviews = await ReviewModel.find().skip(page * limit).limit(limit).lean()
+    async getReviews({ page, limit = 0, shopItemId }:ReviewsFilters):Promise<ReviewsResponse> {
+        const reviews = await ReviewModel.find({ shopItemId }).skip(page * limit).limit(limit).lean()
 
-        const totalCounts = await ReviewModel.countDocuments()
+        const totalCounts = await ReviewModel.countDocuments({ shopItemId })
 
         return { reviews, totalCounts }
     }
     
-    async createReview(review:ReviewInput):Promise<void> {
-        await ReviewModel.create(review)
+    async createReview({ title, description, rating, authorId, shopItemId }:ReviewInput):Promise<void> {
+        await ReviewModel.create({ title, description, rating, authorId, shopItemId })
         
         return
     }

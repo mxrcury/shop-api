@@ -2,7 +2,7 @@ import { Tag } from "./tag.entitiy"
 import { User } from "./user.entity"
 
 export interface ShopItem {
-    id?: string
+    id: string
     title: string
     description: string
     price: number
