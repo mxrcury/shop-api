@@ -1,7 +1,7 @@
-import { getModelForClass, post, prop } from "@typegoose/typegoose";
+import { getModelForClass, index, post, prop } from "@typegoose/typegoose";
 import { ObjectId } from "mongodb";
 import { User } from './user';
-import { ShopItemsModel } from "./shopItem";
+import { ShopItem, ShopItemsModel } from "./shopItem";
 import { Review } from "../entities/review.entity";
 
 @post<Reviews>('save', async function () {
@@ -12,6 +12,7 @@ import { Review } from "../entities/review.entity";
     await ShopItemsModel.findByIdAndUpdate((await this).shopItemId, { $inc: { totalReviews: -1 } }).exec()
 })
 
+@index({ authorId: 1, shopItemId:1 }, { unique: true })
 class Reviews {
     @prop({ type: String, required: true })
     title: string
@@ -21,7 +22,7 @@ class Reviews {
     rating: number
     @prop({ type: ObjectId, required: true, ref: () => User })
     authorId: string
-    @prop({ type: ObjectId, required: true })
+    @prop({ type: ObjectId, required: true, ref: () => ShopItem })
     shopItemId: string
 }
 

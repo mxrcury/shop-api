@@ -10,7 +10,7 @@ import { ShopItem } from '../entities/shopItem.entity';
 
 
 class ShopItemController {
-    async getAll(req: ControllerRequest, res: express.Response<ItemsResponse<User>>): ControllerResponse<ItemsResponse<User>> {
+    async getAll(req: ControllerRequest, res: express.Response<ItemsResponse<ShopItem>>): ControllerResponse<ItemsResponse<ShopItem>> {
         const { page, limit, title, sortBy } = req.query
 
         const filters = { searchFilter:{ title: getRegex(title) }, sortBy }

@@ -3,6 +3,7 @@ import express from 'express'
 import { ControllerResponse, ItemsResponse, ControllerRequest } from "../types/controllers";
 import { Review } from '../entities/review.entity';
 import ReviewService from '../services/review';
+import { UserModel } from '../models/user';
 
 
 class ReviewController {
@@ -19,9 +20,10 @@ class ReviewController {
     }
 
     async create(req:ControllerRequest, res:express.Response<void>):ControllerResponse<void> {
+        const { shopItemId } = req.params
         const reviewInput = req.body
-
-        await ReviewService.createReview({ ...reviewInput, authorId: req.user.id })
+        console.log(shopItemId, req.user, await UserModel.findById(req.user.id))
+        await ReviewService.createReview({ ...reviewInput, authorId: req.user.id, shopItemId })
 
         return res.status(201).send()
     }

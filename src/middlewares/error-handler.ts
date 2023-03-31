@@ -2,7 +2,10 @@ import express from "express"
 import { ApiError } from "../exceptions/error"
 
 export default (err: express.ErrorRequestHandler, req: express.Request, res: express.Response, next: express.NextFunction) => {
-    console.log(err)
+
+    if(process.env.NODE_ENV === 'development') {
+        console.log(err)
+    }
     
     if (err.name === 'JsonWebTokenError') {
         res.status(401).send({

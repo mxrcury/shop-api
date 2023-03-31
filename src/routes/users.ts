@@ -9,9 +9,10 @@ const usersRouter = express.Router()
 
 usersRouter.get('/', asyncWrapper(UsersController.getAll))
 usersRouter.get('/:id', asyncWrapper(UsersController.getOne))
+
 usersRouter.get('/me', setCurrentUserId , asyncWrapper(UsersController.getOne))
-usersRouter.patch('/me', asyncWrapper(UsersController.updateMyProfile))
-usersRouter.post('/delete-me', asyncWrapper(UsersController.deleteMyProfile))
+usersRouter.patch('/update-me',setCurrentUserId, asyncWrapper(UsersController.updateMe))
+usersRouter.post('/delete-me', setCurrentUserId, asyncWrapper(UsersController.deleteMe))
 
 usersRouter.use(rightsValidation(Roles.Admin))
 usersRouter.patch('/:id', asyncWrapper(UsersController.updateOne))

@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "yarn build && node build/app.js",
+    "start": "export NODE_ENV=production yarn build && node build/app.js",
     "build": "tsc",
-    "dev": "nodemon ./src/app.ts",
+    "dev": "export NODE_ENV=development && nodemon ./src/app.ts",
     "debug": "yarn build && node --inspect build/app.js"
   },
   "dependencies": {

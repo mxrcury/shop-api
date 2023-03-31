@@ -2,7 +2,6 @@ import { User } from '../entities/user.entity';
 import express from 'express';
 import UsersService from '../services/user';
 import { ControllerRequest, ControllerResponse, ItemsResponse } from '../types/controllers';
-import { UsersResponse } from '../types/users';
 
 export default new class UsersController {
     async getAll (req: ControllerRequest, res: express.Response<ItemsResponse<User>>): ControllerResponse<ItemsResponse<User>> {
@@ -33,16 +32,16 @@ export default new class UsersController {
         return res.status(201).send()
     }
 
-    async updateMyProfile(req: express.Request, res: express.Response<void>): ControllerResponse<void> {
+    async updateMe(req: express.Request, res: express.Response<void>): ControllerResponse<void> {
         const { id } = req.params
         const dataForUpdate = req.body
 
-        await UsersService.updateUser(id, dataForUpdate)
+        await UsersService.updateMe(id, dataForUpdate)
 
         return res.status(201).send()
     }
 
-    async deleteMyProfile(req: ControllerRequest, res: express.Response<void>): ControllerResponse<void> {
+    async deleteMe(req: ControllerRequest, res: express.Response<void>): ControllerResponse<void> {
         const { id } = req.user
         const { password } = req.body
 
