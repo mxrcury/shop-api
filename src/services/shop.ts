@@ -14,7 +14,6 @@ class ShopService {
     }
 
     async createShop({ name, location }: { name: string, location: string }): Promise<void> {
-        console.log({ name, location });
 
         await ShopsModel.create({ name, location })
 
