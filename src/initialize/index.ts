@@ -21,7 +21,7 @@ const start = async (app: express.Express, port: string | number = 7000) => {
     try {
         const dirname = path.resolve('./')
 
-        // app.use(express.static(`${dirname}/public`))
+        app.use('/public',express.static(`${dirname}/public`))
         templatesInit(app)
         app.use(express.json({ limit: '10kb' }) )
         app.use(mongoSanitize())
