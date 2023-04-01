@@ -1,4 +1,4 @@
 # shop-api
 API for online shop
 Deployment
-https://shop-api-4krd.onrender.com
+https://shop-api-production-d2b7.up.railway.app/
