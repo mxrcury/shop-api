@@ -1,5 +1,5 @@
-import { Shop, ShopsModel } from "../models/shop";
-import { ShopFiltersInput, ShopsResponse } from "../types/shop";
+import { ShopsModel } from "../models/shop";
+import { ShopFiltersInput, ShopsResponse, WithinInput } from "../types/shop";
 
 class ShopService {
     async getShops({ page = 0, limit = 0, filters }: ShopFiltersInput): Promise<ShopsResponse> {
@@ -8,7 +8,7 @@ class ShopService {
         const totalCounts = await ShopsModel.countDocuments()
 
         return {
-            shops: shops as any,
+            shops,
             totalCounts
         }
     }
@@ -21,12 +21,12 @@ class ShopService {
         return
     }
 
-    async getShopsWithin({ distance, lat, lng, unit }: { distance: number, lat: number, lng: number, unit: 'mi' | 'km' }): Promise<ShopsResponse> {
+    async getShopsWithin({ distance, lat, lng, unit }: WithinInput): Promise<ShopsResponse> {
         const radius = {
             mi: distance / 3963.2,
             km: distance / 6378.1
         }
-        console.log(radius[unit])
+
         const shops = await ShopsModel.find({ location: { $geoWithin: { $centerSphere: [[lat, lng], radius[unit]] } } }).lean().exec()
 
         return {

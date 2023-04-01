@@ -12,6 +12,8 @@ import { rootRouter } from "../routes/root"
 import notFoundRoute from "../middlewares/not-found-route"
 import errorHandler from "../middlewares/error-handler"
 import { rateLimitter } from "../middlewares/request-limitter"
+import templatesInit from "./templates"
+import { templatesRouter } from "../routes/templates"
 
 dotenv.config()
 
@@ -19,7 +21,8 @@ const start = async (app: express.Express, port: string | number = 7000) => {
     try {
         const dirname = path.resolve('./')
 
-        app.use(express.static(`${dirname}/public`))
+        // app.use(express.static(`${dirname}/public`))
+        templatesInit(app)
         app.use(express.json({ limit: '10kb' }) )
         app.use(mongoSanitize())
         app.use(xss())
@@ -27,7 +30,8 @@ const start = async (app: express.Express, port: string | number = 7000) => {
         app.use(cookieParser())
         app.use(rateLimitter)
 
-        app.use('/',rootRouter)
+        app.use('/', templatesRouter)
+        app.use('/', rootRouter)
         
         app.use(notFoundRoute)
         app.use(errorHandler)
