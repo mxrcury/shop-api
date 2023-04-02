@@ -3,7 +3,7 @@ import express from 'express'
 const templatesRouter = express.Router()
 
 templatesRouter.get('/', async (req:express.Request,res:express.Response) => {
-    const hostLink = `${req.protocol}://${req.hostname}/:6969`
+    const hostLink = `${req.protocol}://${req.hostname}:6969/`
 
     const { title, author, links } = {
         title:'Free API for your online shop project :)',
