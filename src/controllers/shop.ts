@@ -3,7 +3,7 @@ import { ControllerRequest, ControllerResponse, ItemsResponse } from "../types/c
 import express from 'express';
 import getRegex from "../utils/getRegex";
 import ShopService from "../services/shop";
-import { WithinParams } from "../types/shop";
+import { DistancesParams, WithinParams } from "../types/shop";
 
 class ShopController {
     async getAll(req: ControllerRequest, res: express.Response<ItemsResponse<Shop>>): ControllerResponse<ItemsResponse<Shop>> {
@@ -43,7 +43,23 @@ class ShopController {
             items: shops,
             totalCounts
         })
+    }
 
+    async getDistances(req: express.Request<DistancesParams>, res: express.Response<ItemsResponse<Shop>>): ControllerResponse<ItemsResponse<Shop>> {
+        const { latlng, unit } = req.params
+
+        const [lat,lng] = latlng.split(',')
+
+        const { shops, totalCounts } = await ShopService.getShopsDistances({
+            lat: parseInt(lat),
+            lng: parseInt(lng),
+            unit
+        })
+
+        return res.status(200).send({
+            items: shops,
+            totalCounts
+        }) 
     }
 }
 

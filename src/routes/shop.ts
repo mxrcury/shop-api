@@ -7,6 +7,7 @@ const shopsRouter = express.Router()
 
 shopsRouter.get('/', asyncWrapper(ShopController.getAll))
 shopsRouter.get('/within/:distance/center/:latlng/unit/:unit', asyncWrapper(ShopController.getWithin))
+shopsRouter.get('/distances/:latlng/unit/:unit', asyncWrapper(ShopController.getDistances))
 shopsRouter.post('/', asyncWrapper(ShopController.create))
 
 export { shopsRouter }

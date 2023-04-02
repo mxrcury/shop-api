@@ -26,7 +26,7 @@ class ShopItemController {
     async getOne(req: ControllerRequest, res: express.Response<ShopItem>): ControllerResponse<ShopItem> {
         const { id } = req.params
 
-        const shopItem = await ShopItemService.getShopItemById(id)
+        const shopItem = await ShopItemService.getShopItem(id)
 
         return res.status(200).send(shopItem)
     }
@@ -40,6 +40,17 @@ class ShopItemController {
         await ShopItemService.createShopItem({ ...shopItem, userId: req.user.id})
 
         return res.status(200).send()
+    }
+
+    async deleteOne(
+        req: ControllerRequest,
+        res: express.Response
+    ): ControllerResponse<void> {
+        const { id } = req.params
+
+        await ShopItemService.deleteShopItem(id)
+
+        return res.status(204).send()
     }
 }
 

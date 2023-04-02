@@ -18,9 +18,13 @@ class ShopItemService {
         await ShopItemsModel.create({ title, price, quantity, description, userId })
         return
     }
-    async getShopItemById(id: string): Promise<ShopItem> {
+    async getShopItem(id: string): Promise<ShopItem> {
         const shopItem = await ShopItemsModel.findById(id).lean() as ShopItem
         return shopItem
+    }
+    async deleteShopItem(id:string): Promise<void> {
+        await ShopItemsModel.findByIdAndRemove(id)
+        return 
     }
 }
 

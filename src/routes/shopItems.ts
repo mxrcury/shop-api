@@ -13,5 +13,6 @@ shopItemsRouter.use('/:shopItemId/reviews', reviewRouter)
 shopItemsRouter.get('/', asyncWrapper(ShopItemController.getAll))
 shopItemsRouter.get('/:id', asyncWrapper(ShopItemController.getOne))
 shopItemsRouter.post('/', asyncWrapper(ShopItemController.create))
+shopItemsRouter.delete('/:id', asyncWrapper(ShopItemController.deleteOne))
 
 export { shopItemsRouter }

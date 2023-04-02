@@ -8,16 +8,23 @@ export interface ShopsResponse {
     totalCounts:number
 }
 
-export interface WithinOptions {
+export interface GeoOptions {
     unit: Units.Mi | Units.Km
 }
 
-export interface WithinParams extends WithinOptions { latlng: string, distance: string }
+export interface WithinParams extends GeoOptions { latlng: string, distance: string }
 
-export interface WithinInput extends WithinOptions {
+export interface WithinInput extends GeoOptions {
     lat:number,
     lng:number,
     distance:number
+}
+
+export interface DistancesParams extends GeoOptions { latlng: string }
+
+export interface DistancesInput extends GeoOptions {
+    lat:number,
+    lng:number
 }
 
 export enum Units {
