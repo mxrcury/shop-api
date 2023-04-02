@@ -1,5 +1,6 @@
 export const allowedFields = {
     firstName:'',
     lastName:'',
-    email:''
+    email:'',
+    photo:''
 }

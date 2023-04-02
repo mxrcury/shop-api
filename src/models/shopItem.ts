@@ -1,4 +1,4 @@
-import { pre, prop, Ref, getModelForClass } from "@typegoose/typegoose";
+import { pre, prop, Ref, getModelForClass, modelOptions, Severity } from "@typegoose/typegoose";
 import { User, UserModel } from './user';
 import { CreatedByInterface } from '../types/shopItem';
 import { Tag, TagModel } from "./tag";
@@ -14,14 +14,15 @@ import { ReviewModel } from "./reviews";
     this.tags = await Promise.all(this.tags.map(async (tag) => await TagModel.findOne({ name:tag })))
     next()
 })
-// @post<ShopItem>(/find/)
 
+// read more about what is Mixed
+@modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class ShopItem {
     @prop({ type: String, required: true })
     title: string
     @prop({ type: String, required: true })
     description: string
-    @prop({ type: Array, required: false })
+    @prop({ type: [String], required: false })
     photos: string[]
     @prop({ type: Number, required: false, default: 0 })
     quantity: number
@@ -44,8 +45,3 @@ export class ShopItem {
 }
 
 export const ShopItemsModel = getModelForClass(ShopItem)
-
-// ShopItemsModel.calculateAverageRating = function (shopItemId) {
-
-// }
-

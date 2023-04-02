@@ -13,9 +13,9 @@ class ShopItemController {
     async getAll(req: ControllerRequest, res: express.Response<ItemsResponse<ShopItem>>): ControllerResponse<ItemsResponse<ShopItem>> {
         const { page, limit, title, sortBy } = req.query
 
-        const filters = { searchFilter:{ title: getRegex(title) }, sortBy }
+        const filters = { searchFilter: { title: getRegex(title) }, sortBy }
 
-        const { shopItems, totalCounts } = await ShopItemService.getShopItems({ page:parseInt(page), limit:parseInt(limit), filters })
+        const { shopItems, totalCounts } = await ShopItemService.getShopItems({ page: parseInt(page), limit: parseInt(limit), filters })
 
         return res.status(200).send({
             items: shopItems,
@@ -37,9 +37,25 @@ class ShopItemController {
     ): ControllerResponse<void> {
         const shopItem = req.body
 
-        await ShopItemService.createShopItem({ ...shopItem, userId: req.user.id})
+        await ShopItemService.createShopItem({ ...shopItem, userId: req.user.id })
 
         return res.status(200).send()
+    }
+
+    async updateOne(
+        req: ControllerRequest,
+        res: express.Response
+    ): ControllerResponse<void> {
+        const { id } = req.params
+        const updatedData = req.body
+
+        if(req.files.length) updatedData.photos = req.body.images
+
+        console.log(updatedData)
+
+        await ShopItemService.updateShopItem(id, updatedData)
+
+        return res.status(201).send()
     }
 
     async deleteOne(
