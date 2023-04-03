@@ -34,18 +34,7 @@ class AuthService {
 
         const token = await TokenService.createConfirmToken(user.id)
 
-        await EmailService.sendEmail({
-            to:user.email,
-            from:'honchar@duck.com',
-            text:'Please confirm your email!',
-            html:`
-                <div>
-                    <h1>Hello, please verify your email</h1>
-                    <p>Click <a href='${confirmUrl}${token}'>here</a></p>
-                    <b>If you did not register your email, please ignore this message.</b>
-                </div>
-            `
-        })
+        await EmailService.sendConfirmationEmail(user.email, confirmUrl)
 
         return;
     }

@@ -12,10 +12,10 @@ export default new (class AuthController {
     async signUp(
         req: express.Request<any, User>,
         res: express.Response
-        ): ControllerResponse<Tokens> {
+    ): ControllerResponse<Tokens> {
 
-        const confirmUrl = `${req.protocol}://${req.hostname}:6969/auth/confirmEmail/`
-        
+        const confirmUrl = `${req.protocol}://${req.hostname}${req.hostname !== 'localhost' ? '' : ':6969'}/auth/confirmEmail/`
+
         await AuthService.signUp(req.body, confirmUrl);
 
         return res.status(201).send();
@@ -48,7 +48,7 @@ export default new (class AuthController {
 
         return res.status(200).send()
     }
-    
+
     async forgotPassword(
         req: express.Request<any, void>,
         res: express.Response
@@ -57,11 +57,11 @@ export default new (class AuthController {
 
         const confirmUrl = `${req.protocol}://${req.hostname}:6969/auth/resetPassword/`
 
-        await AuthService.forgotPassword({email, confirmUrl});
+        await AuthService.forgotPassword({ email, confirmUrl });
 
         return res.status(200).send();
     }
-    
+
     async resetPassword(
         req: express.Request<any, void>,
         res: express.Response
@@ -72,14 +72,14 @@ export default new (class AuthController {
         await AuthService.resetPassword(token, password);
 
         return res.status(201).send();
-    } 
-    
-    async updatePassword (req: ControllerRequest, res: express.Response<void>): ControllerResponse<void> {
+    }
+
+    async updatePassword(req: ControllerRequest, res: express.Response<void>): ControllerResponse<void> {
         const { id } = req.user
         const { currentPassword, newPassword } = req.body
 
         await AuthService.changePassword({ currentPassword, newPassword, id })
-        
+
         return res.status(201).send()
     }
 
