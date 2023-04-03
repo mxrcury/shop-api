@@ -7,15 +7,15 @@ export class User {
     firstName: string
     @prop({ type: String, required: [true, 'You did not entered your last name'] })
     lastName: string
-    @prop({ type: String, required: [true, 'You did not entered your email.'], minlength: [6, 'Your email has to be more than 8 length'], maxlength: [30, 'Your email has to be less than 6 length'], unique: true })
+    @prop({ type: String, required: [true, 'You did not entered your email.'], minlength: [6, 'Your email has to be more than 8 length'], validate: validator.isEmail, unique: true })
     email: string
-    @prop({ type: String, required: [true, 'Please enter your password'], minlength: [6, 'Your password has to be more than 6 length'], validate: validator.isEmail, unique: true })
+    @prop({ type: String, required: [true, 'Please enter your password'], minlength: [6, 'Your password has to be more than 6 length'] })
     password: string
-    @prop({ type: String, required: true, default: Roles.Guest, enum: [Roles.Admin, Roles.Guest] })
+    @prop({ type: String, default: Roles.Guest, enum: [Roles.Admin, Roles.Guest] })
     role: RolesType
-    @prop({ type: String, required: false, default: 'default.png' })
+    @prop({ type: String, default: 'default.png' })
     photo?: string
-    @prop({ type: Boolean, required: false, default: false })
+    @prop({ type: Boolean, default: false })
     confirmedEmail?: boolean
 }
 
