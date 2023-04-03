@@ -34,7 +34,7 @@ class AuthService {
 
         const token = await TokenService.createConfirmToken(user.id)
 
-        await EmailService.sendConfirmationEmail(user.email, confirmUrl)
+        await EmailService.sendConfirmationEmail(user.email, `${confirmUrl + token}`)
 
         return;
     }
