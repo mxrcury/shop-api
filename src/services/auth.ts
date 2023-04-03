@@ -100,17 +100,7 @@ class AuthService {
 
         const token = await TokenService.createConfirmToken(user.id)
 
-        await EmailService.sendEmail({
-            from: 'Dmytro Honchar <mxrcury6@protonmail.com>',
-            to: email,
-            subject: 'Reset your password',
-            text: 'Please read below for resetting your password',
-            html: `<div>
-            <h1>Rest Password</h1>
-            <p>If you want to reset your password, please enter on this link <a href='${confirmUrl + token}' >Click here!</a></p>
-            <b>DON'T DO IF YOU ARE NOT SURE IN THIS ACTION!</b>
-            </div>`,
-        });
+        await EmailService.sendForgotPassEmail(email, options.confirmUrl + token)
 
         return;
     }
