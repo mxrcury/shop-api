@@ -1,5 +1,4 @@
-import { Review } from '../entities/review.entity';
-import { ReviewModel } from '../models/reviews';
+import { ReviewModel, Review } from '../models/review';
 import { ItemsResponse } from '../types/controllers';
 import { ReviewInput, ReviewsFilters } from '../types/review';
 

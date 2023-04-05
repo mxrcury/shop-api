@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import AuthService from '../services/auth';
 
 import { ControllerRequest, ControllerResponse } from '../types/controllers';
-import { User } from '../entities/user.entity';
+import { User } from '../models/user';
 import { Tokens } from '../types/token';
 import { REFRESH_TOKEN } from '../constants/index';
 

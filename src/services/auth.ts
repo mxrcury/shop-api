@@ -1,13 +1,12 @@
 import bcrypt from 'bcrypt';
 
-import { User, UserModel } from '../models/user';
+import { UserModel } from '../models/user';
 import { ApiError } from '../exceptions/error';
 import {
   ForgotPassOptions,
   LoginInput,
   ResetPassOptions,
   SignUpOptions,
-  UserInput,
 } from '../types/auth';
 import TokenService from './token';
 import { Tokens } from '../types/token';

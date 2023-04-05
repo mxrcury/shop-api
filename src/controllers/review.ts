@@ -5,7 +5,7 @@ import {
   ItemsResponse,
   ControllerRequest,
 } from '../types/controllers';
-import { Review } from '../entities/review.entity';
+import { Review } from '../models/review';
 import ReviewService from '../services/review';
 
 class ReviewController {

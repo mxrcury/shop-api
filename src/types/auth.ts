@@ -1,5 +1,4 @@
-import { ObjectId } from 'mongodb';
-import { User } from '../entities/user.entity';
+import { User } from '../models/user';
 
 export interface LoginInput {
   email: string;
@@ -9,7 +8,7 @@ export interface LoginInput {
 export interface PasswordsInput {
   currentPassword: string;
   newPassword: string;
-  id: ObjectId;
+  id: string;
 }
 
 export interface UserInput extends User {

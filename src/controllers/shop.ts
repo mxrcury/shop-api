@@ -1,4 +1,4 @@
-import { Shop } from '../entities/shop.entity';
+import { Shop } from '../models/shop';
 import {
   ControllerRequest,
   ControllerResponse,

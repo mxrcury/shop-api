@@ -1,5 +1,4 @@
 import { DOCUMENT_NOT_FOUND } from '../constants';
-import { ShopItem } from '../entities/shopItem.entity';
 import { ApiError } from '../exceptions/error';
 import { ShopItem, ShopItemsModel } from '../models/shopItem';
 import { RestFields } from '../types/common';

@@ -1,4 +1,4 @@
-import { User } from '../entities/user.entity';
+import { User } from '../models/user';
 import express from 'express';
 import UsersService from '../services/user';
 import {

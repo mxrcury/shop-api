@@ -9,7 +9,7 @@ import {
   UpdateUserOptions,
   UsersFilterInput,
 } from '../types/users';
-import { User } from '../entities/user.entity';
+import { User } from '../models/user';
 import { allowedFields } from '../validation/body/user';
 import { ItemsResponse } from '../types/controllers';
 import { DOCUMENT_NOT_FOUND } from '../constants';

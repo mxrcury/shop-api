@@ -8,7 +8,7 @@ import {
   ControllerResponse,
   ItemsResponse,
 } from '../types/controllers';
-import { ShopItem } from '../entities/shopItem.entity';
+import { ShopItem } from '../models/shopItem';
 
 class ShopItemController {
   async getAll(

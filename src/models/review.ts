@@ -3,20 +3,20 @@ import { User } from './user';
 import { ShopItem, ShopItemsModel } from './shopItem';
 import { FIELD_CANNOT_BE_EMPTY } from '../constants';
 
-@post<Reviews>('save', async function (doc) {
+@post<Review>('save', async function (doc) {
   const reviewsQty = await ReviewModel.countDocuments({ id: doc.shopItemId });
   await ShopItemsModel.findByIdAndUpdate(doc.shopItemId, {
     totalReviews: reviewsQty,
   });
 })
-@post<Reviews>(/^findOneAndRemove/, async function (doc) {
+@post<Review>(/^findOneAndRemove/, async function (doc) {
   const reviewsQty = await ReviewModel.countDocuments({ id: doc.shopItemId });
   await ShopItemsModel.findByIdAndUpdate(doc.shopItemId, {
     totalReviews: reviewsQty,
   });
 })
 @index({ authorId: 1, shopItemId: 1 }, { unique: true })
-class Reviews {
+export class Review {
   @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('title')] })
   title: string;
   @prop({ type: String, required: false })
@@ -35,4 +35,4 @@ class Reviews {
   shopItemId: Ref<ShopItem>;
 }
 
-export const ReviewModel = getModelForClass(Reviews);
+export const ReviewModel = getModelForClass(Review);

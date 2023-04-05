@@ -1,4 +1,4 @@
-import { Review } from '../entities/review.entity';
+import { Review } from '../models/review';
 import { FiltersOptions } from './common';
 
 export interface ReviewInput extends Review {}
