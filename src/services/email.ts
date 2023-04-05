@@ -2,11 +2,12 @@ import nodemailer, { Transporter } from 'nodemailer';
 import { Options } from 'nodemailer/lib/mailer';
 import pug from 'pug';
 import path from 'path';
+import { PLEASE_CONFIRM_EMAIL, PLEASE_READ_BELOW } from '../constants';
+import { EmailOptions } from '../types/email';
 
 class EmailService {
   private transporter: Transporter;
-  public sender: string;
-  constructor(sender: string = process.env.EMAIL_SENDER) {
+  constructor(public sender: string) {
     this.sender = sender;
     this.initialize();
   }
@@ -32,28 +33,28 @@ class EmailService {
     });
   }
 
-  async sendConfirmationEmail(to: string, confirmUrl: string): Promise<void> {
+  async sendConfirmationEmail({ to, confirmUrl }: EmailOptions): Promise<void> {
     const templatePath = path.resolve('src', 'views', 'confirmEmail.pug');
     const html = pug.renderFile(templatePath, { confirmUrl });
 
     return await this.sendEmail({
       to,
-      text: 'Please confirm your email!',
+      text: PLEASE_CONFIRM_EMAIL,
       html,
     });
   }
 
-  async sendForgotPassEmail(to: string, confirmUrl: string): Promise<void> {
+  async sendForgotPassEmail({ to, confirmUrl }: EmailOptions): Promise<void> {
     const templatePath = path.resolve('src', 'views', 'forgotPassword.pug');
     const html = pug.renderFile(templatePath, { confirmUrl });
 
     return await this.sendEmail({
       to,
       subject: 'Reset your password',
-      text: 'Please read below for resetting your password',
+      text: PLEASE_READ_BELOW,
       html,
     });
   }
 }
 
-export default new EmailService();
+export default new EmailService(process.env.EMAIL_SENDER);

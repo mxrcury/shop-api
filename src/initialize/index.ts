@@ -36,7 +36,7 @@ const start = async (app: express.Express, port: string | number = 7000) => {
     app.use('/', templatesRouter);
     app.use('/', rootRouter);
 
-    app.use(notFoundRoute);
+    app.use('*', notFoundRoute);
     app.use(errorHandler);
 
     await mongoose.connect(

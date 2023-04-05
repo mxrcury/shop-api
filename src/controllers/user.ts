@@ -14,15 +14,12 @@ class UsersController {
   ): ControllerResponse<ItemsResponse<User>> {
     const { page, limit } = req.query;
 
-    const { users, totalCounts } = await UsersService.getUsers({
+    const users = await UsersService.getUsers({
       page: parseInt(page),
       limit: parseInt(limit),
     });
 
-    return res.status(200).send({
-      items: users,
-      totalCounts,
-    });
+    return res.status(200).send(users);
   }
 
   async getOne(
@@ -41,9 +38,11 @@ class UsersController {
     res: express.Response<void>
   ): ControllerResponse<void> {
     const { id } = req.params;
-    const dataForUpdate = { ...req.body, photo: req.file.filename };
+    const dataForUpdate = req.body;
 
-    await UsersService.updateUser(id, dataForUpdate);
+    if (req.file) dataForUpdate.photo = req.file.filename;
+
+    await UsersService.updateUser({ id, dataForUpdate });
 
     return res.status(201).send();
   }
@@ -53,9 +52,11 @@ class UsersController {
     res: express.Response<void>
   ): ControllerResponse<void> {
     const { id } = req.params;
-    const dataForUpdate = { ...req.body, photo: req.file.filename };
+    const dataForUpdate = req.body;
 
-    await UsersService.updateMe(id, dataForUpdate);
+    if (req.file) dataForUpdate.photo = req.file.filename;
+
+    await UsersService.updateMe({ id, dataForUpdate });
 
     return res.status(201).send();
   }

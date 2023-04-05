@@ -1,5 +1,4 @@
 import { getModelForClass, index, post, prop, Ref } from '@typegoose/typegoose';
-import { ObjectId } from 'mongodb';
 import { User } from './user';
 import { ShopItem, ShopItemsModel } from './shopItem';
 import { FIELD_CANNOT_BE_EMPTY } from '../constants';

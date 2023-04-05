@@ -13,10 +13,12 @@ class AuthController {
     req: express.Request<any, User>,
     res: express.Response
   ): ControllerResponse<Tokens> {
-    const confirmUrl = `${req.protocol}://${req.hostname}${req.hostname !== 'localhost' ? '' : ':6969'
-      }/auth/confirmEmail/`;
+    const userInput = req.body;
+    const confirmUrl = `${req.protocol}://${req.hostname}${
+      req.hostname !== 'localhost' ? '' : ':6969'
+    }/auth/confirmEmail/`;
 
-    await AuthService.signUp(req.body, confirmUrl);
+    await AuthService.signUp({ userInput, confirmUrl });
 
     return res.status(201).send();
   }
@@ -70,7 +72,7 @@ class AuthController {
     const { token } = req.params;
     const { password } = req.body;
 
-    await AuthService.resetPassword(token, password);
+    await AuthService.resetPassword({ token, password });
 
     return res.status(201).send();
   }

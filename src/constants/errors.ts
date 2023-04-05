@@ -4,3 +4,6 @@ export const USER_NOT_FOUND_TOKEN = 'User who token belows do not exists.';
 
 export const FIELD_CANNOT_BE_EMPTY = (field: string) =>
   `The ${field} cannot be empty.`;
+
+export const DOCUMENT_NOT_FOUND = (document: string) =>
+  `${document} was not found.`;

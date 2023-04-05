@@ -1,4 +1,4 @@
 export interface EmailOptions {
-    email:string,
-    confirmUrl:string
+  to: string;
+  confirmUrl: string;
 }

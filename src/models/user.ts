@@ -26,6 +26,7 @@ export class User {
     type: String,
     default: Roles.Guest,
     enum: [Roles.Admin, Roles.Guest],
+    select: false,
   })
   role: RolesType;
   @prop({ type: String, default: 'default.png' })

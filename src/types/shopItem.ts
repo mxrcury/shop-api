@@ -2,17 +2,18 @@ import { ShopItem } from '../entities/shopItem.entity';
 import { Tag } from '../entities/tag.entitiy';
 import { FiltersOptions, RegExInterface } from './common';
 
-export interface ShopItemsResponse {
-  shopItems: ShopItem[];
-  totalCounts: number;
-}
-
 export enum SortByEnums {
   Price = 'price',
   CreatedAt = 'createdAt',
   Quantity = 'quantity',
 }
 
+export interface PartialShopItem extends Partial<ShopItem> {}
+
+export interface UpdateShopItemOptions {
+  id: string;
+  updatedData: PartialShopItem;
+}
 interface SearchTitleInterface {
   searchFilter: { title: RegExInterface };
 }
