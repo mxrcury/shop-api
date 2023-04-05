@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 
 import { UserModel } from '../models/user';
 import { ApiError } from '../exceptions/error';
-import { RestFields } from '../types/common';
 import filterAllowedFields from '../utils/filterAllowedFields';
 import {
   DeleteUserInput,

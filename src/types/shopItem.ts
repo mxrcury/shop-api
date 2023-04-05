@@ -1,5 +1,5 @@
-import { ShopItem } from '../entities/shopItem.entity';
-import { Tag } from '../entities/tag.entitiy';
+import { ShopItem } from '../models/shopItem';
+import { Tag } from '../models/tag';
 import { FiltersOptions, RegExInterface } from './common';
 
 export enum SortByEnums {

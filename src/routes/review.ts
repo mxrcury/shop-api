@@ -1,10 +1,11 @@
-import express from 'express'
-import { asyncWrapper } from '../utils/asyncWrapper'
-import ReviewController from '../controllers/review'
+import express from 'express';
 
-const reviewRouter = express.Router({ mergeParams:true })
+import { asyncWrapper } from '../utils/asyncWrapper';
+import ReviewController from '../controllers/review';
 
-reviewRouter.get('/', asyncWrapper(ReviewController.getAll))
-reviewRouter.post('/', asyncWrapper(ReviewController.create))
+const reviewRouter = express.Router({ mergeParams: true });
 
-export { reviewRouter }
+reviewRouter.get('/', asyncWrapper(ReviewController.getAll));
+reviewRouter.post('/', asyncWrapper(ReviewController.create));
+
+export { reviewRouter };
