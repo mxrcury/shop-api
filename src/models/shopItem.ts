@@ -1,47 +1,54 @@
-import { pre, prop, Ref, getModelForClass, modelOptions, Severity } from "@typegoose/typegoose";
+import {
+  pre,
+  prop,
+  Ref,
+  getModelForClass,
+  modelOptions,
+  Severity,
+} from '@typegoose/typegoose';
 import { User, UserModel } from './user';
-import { CreatedByInterface } from '../types/shopItem';
-import { Tag, TagModel } from "./tag";
-import { ReviewModel } from "./reviews";
+import { Tag, TagModel } from './tag';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
+import { FIELD_CANNOT_BE_EMPTY } from '../constants';
+import { Shop } from './shop';
 
 @pre<ShopItem>('save', async function (next) {
-    const user = await UserModel.findById(this.userId)
-    if(!user) return
-    const { firstName, lastName, email, photo } = user
-    this.createdBy = { firstName, lastName, email, photo }
-    this.tags = []
-    this.createdAt = (new Date()).toJSON()
-    this.tags = await Promise.all(this.tags.map(async (tag) => await TagModel.findOne({ name:tag })))
-    next()
+  const { firstName, lastName } = await UserModel.findById(this.authorId)
+    .select('firstName lastName')
+    .exec();
+  if (!firstName || !lastName) return;
+  this.createdBy = `${firstName} ${lastName}`;
+  this.tags = await TagModel.find({ name: { $in: this.tags } });
+  next();
 })
-
-// read more about what is Mixed
-@modelOptions({ options: { allowMixed: Severity.ALLOW } })
-export class ShopItem {
-    @prop({ type: String, required: true })
-    title: string
-    @prop({ type: String, required: true })
-    description: string
-    @prop({ type: [String], required: false })
-    photos: string[]
-    @prop({ type: Number, required: false, default: 0 })
-    quantity: number
-    @prop({
-        type: Object, required: false
-    })
-    createdBy: CreatedByInterface
-    @prop({ type: String, required: true, ref: () => User })
-    userId: Ref<User, string>
-    @prop({ type: Date, required: false })
-    createdAt: string
-    // @prop({ type: String, required: false, ref: 'Seller' })
-    // seller: string
-    @prop({ type: () => String, required: false, ref: () => Tag })
-    tags: string[]
-    @prop({ type: Number, required: true })
-    price: number
-    @prop({ type: Number, required: false, default: 0 })
-    totalReviews: number
+// @modelOptions({ options: { allowMixed: Severity.ALLOW } })
+export class ShopItem extends TimeStamps {
+  @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('title')] })
+  title: string;
+  @prop({
+    type: String,
+    required: [true, FIELD_CANNOT_BE_EMPTY('description')],
+  })
+  description: string;
+  @prop({ type: [String], required: [true, FIELD_CANNOT_BE_EMPTY('photos')] })
+  photos: string[];
+  @prop({ type: Number, default: 0 })
+  quantity: number;
+  @prop({
+    required: [true, FIELD_CANNOT_BE_EMPTY('author id')],
+    ref: () => User,
+  })
+  authorId: Ref<User>;
+  @prop({ type: String, required: false })
+  createdBy?: string;
+  @prop({ required: false, ref: () => Shop })
+  shopId?: Ref<Shop>;
+  @prop({ required: false, ref: () => Tag })
+  tags?: Ref<Tag>[];
+  @prop({ type: Number, required: [true, FIELD_CANNOT_BE_EMPTY('price')] })
+  price: number;
+  @prop({ type: Number, default: 0 })
+  totalReviews: number;
 }
 
-export const ShopItemsModel = getModelForClass(ShopItem)
+export const ShopItemsModel = getModelForClass(ShopItem);

@@ -1,60 +1,87 @@
 import { User } from '../entities/user.entity';
 import express from 'express';
 import UsersService from '../services/user';
-import { ControllerRequest, ControllerResponse, ItemsResponse } from '../types/controllers';
+import {
+  ControllerRequest,
+  ControllerResponse,
+  ItemsResponse,
+} from '../types/controllers';
 
-export default new class UsersController {
-    async getAll(req: ControllerRequest, res: express.Response<ItemsResponse<User>>): ControllerResponse<ItemsResponse<User>> {
-        const { page, limit } = req.query
+class UsersController {
+  async getAll(
+    req: ControllerRequest,
+    res: express.Response<ItemsResponse<User>>
+  ): ControllerResponse<ItemsResponse<User>> {
+    const { page, limit } = req.query;
 
-        const { users, totalCounts } = await UsersService.getUsers({ page: parseInt(page), limit: parseInt(limit) })
+    const { users, totalCounts } = await UsersService.getUsers({
+      page: parseInt(page),
+      limit: parseInt(limit),
+    });
 
-        return res.status(200).send({
-            items: users,
-            totalCounts
-        })
-    }
+    return res.status(200).send({
+      items: users,
+      totalCounts,
+    });
+  }
 
-    async getOne(req: express.Request, res: express.Response<User>): ControllerResponse<User> {
-        const { id } = req.params
+  async getOne(
+    req: express.Request,
+    res: express.Response<User>
+  ): ControllerResponse<User> {
+    const { id } = req.params;
 
-        const user = await UsersService.getUserById(id)
+    const user = await UsersService.getUserById(id);
 
-        return res.status(200).send(user)
-    }
+    return res.status(200).send(user);
+  }
 
-    async updateOne(req: express.Request, res: express.Response<void>): ControllerResponse<void> {
-        const { id } = req.params
-        const dataForUpdate = { ...req.body, photo: req.file.filename }
+  async updateOne(
+    req: express.Request,
+    res: express.Response<void>
+  ): ControllerResponse<void> {
+    const { id } = req.params;
+    const dataForUpdate = { ...req.body, photo: req.file.filename };
 
-        await UsersService.updateUser(id, dataForUpdate)
+    await UsersService.updateUser(id, dataForUpdate);
 
-        return res.status(201).send()
-    }
+    return res.status(201).send();
+  }
 
-    async updateMe(req: express.Request, res: express.Response<void>): ControllerResponse<void> {
-        const { id } = req.params
-        const dataForUpdate = { ...req.body, photo: req.file.filename }
+  async updateMe(
+    req: express.Request,
+    res: express.Response<void>
+  ): ControllerResponse<void> {
+    const { id } = req.params;
+    const dataForUpdate = { ...req.body, photo: req.file.filename };
 
-        await UsersService.updateMe(id, dataForUpdate)
+    await UsersService.updateMe(id, dataForUpdate);
 
-        return res.status(201).send()
-    }
+    return res.status(201).send();
+  }
 
-    async deleteMe(req: ControllerRequest, res: express.Response<void>): ControllerResponse<void> {
-        const { id } = req.user
-        const { password } = req.body
+  async deleteMe(
+    req: ControllerRequest,
+    res: express.Response<void>
+  ): ControllerResponse<void> {
+    const { id } = req.user;
+    const { password } = req.body;
 
-        await UsersService.deleteUser({ id, password })
+    await UsersService.deleteUser({ id, password });
 
-        return res.status(201).send()
-    }
+    return res.status(201).send();
+  }
 
-    async deleteOne(req: express.Request, res: express.Response<void>): ControllerResponse<void> {
-        const { id } = req.params
+  async deleteOne(
+    req: express.Request,
+    res: express.Response<void>
+  ): ControllerResponse<void> {
+    const { id } = req.params;
 
-        await UsersService.deleteUser({ id })
+    await UsersService.deleteUser({ id });
 
-        return res.status(200).send()
-    }
+    return res.status(200).send();
+  }
 }
+
+export default new UsersController();

@@ -16,7 +16,7 @@ usersRouter.get('/me', setCurrentUserId , asyncWrapper(UsersController.getOne))
 usersRouter.patch('/update-me',setCurrentUserId, uploadUserPhoto, resizeUserPhoto , asyncWrapper(UsersController.updateMe))
 usersRouter.post('/delete-me', setCurrentUserId, asyncWrapper(UsersController.deleteMe))
 
-// usersRouter.use(rightsValidation(Roles.Admin))
+usersRouter.use(rightsValidation(Roles.Admin))
 usersRouter.patch('/:id', uploadUserPhoto, resizeUserPhoto, asyncWrapper(UsersController.updateOne))
 usersRouter.delete('/:id', asyncWrapper(UsersController.deleteOne))
 

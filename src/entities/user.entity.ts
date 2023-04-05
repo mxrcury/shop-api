@@ -1,11 +1,11 @@
-import { RolesType } from "../types/users"
+import { RolesType } from '../types/users';
 
-export interface User  {
-    id:string
-    firstName:string
-    lastName:string
-    email:string
-    role:RolesType
-    photo?:string
-    confirmedEmail:boolean
+export interface User {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: RolesType;
+    photo: string;
+    confirmedEmail: boolean;
 }

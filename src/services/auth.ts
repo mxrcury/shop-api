@@ -13,8 +13,8 @@ import { PasswordsInput } from '../types/auth';
 import { TOKEN_NOT_FOUND, USER_NOT_FOUND_TOKEN } from '../constants';
 
 class AuthService {
-    async signUp (userInput: UserInput, confirmUrl:string): Promise<void> {
-        const { password, passwordConfirmed, email } = userInput
+    async signUp(userInput: UserInput, confirmUrl: string): Promise<void> {
+        const { password, passwordConfirmed, email } = userInput;
 
         if (password !== passwordConfirmed) {
             throw ApiError.BadRequest('Passwords are not equal');
@@ -32,13 +32,16 @@ class AuthService {
 
         const user = await UserModel.create(userPayload);
 
-        const token = await TokenService.createConfirmToken(user.id)
+        const token = await TokenService.createConfirmToken(user.id);
 
-        await EmailService.sendConfirmationEmail(user.email, `${confirmUrl + token}`)
+        await EmailService.sendConfirmationEmail(
+            user.email,
+            `${confirmUrl + token}`
+        );
 
         return;
     }
-    async login (authInput: LoginInput): Promise<Tokens> {
+    async login(authInput: LoginInput): Promise<Tokens> {
         const { password, email } = authInput;
 
         if (!email || !password) {
@@ -53,8 +56,8 @@ class AuthService {
             throw ApiError.NotFound('User with such email does not exist.');
         }
 
-        if(!user.confirmedEmail) {
-            throw ApiError.BadRequest('You do not confirmed your email.')
+        if (!user.confirmedEmail) {
+            throw ApiError.BadRequest('You do not confirmed your email.');
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
@@ -71,26 +74,28 @@ class AuthService {
         return tokens;
     }
 
-    async confirmEmail (token: string): Promise<void> {
-        const isTokenExists = await ConfirmTokenModel.findOne({ token })
+    async confirmEmail(token: string): Promise<void> {
+        const isTokenExists = await ConfirmTokenModel.findOne({ token });
 
-        if(!isTokenExists) {
-            throw ApiError.NotFound(TOKEN_NOT_FOUND)
+        if (!isTokenExists) {
+            throw ApiError.NotFound(TOKEN_NOT_FOUND);
         }
 
-        await ConfirmTokenModel.deleteOne({ token })
-        
-        const user = await UserModel.findByIdAndUpdate(isTokenExists.userId, { confirmedEmail:true })
+        await ConfirmTokenModel.deleteOne({ token });
 
-        if(!user) {
-            throw ApiError.NotFound(USER_NOT_FOUND_TOKEN)
+        const user = await UserModel.findByIdAndUpdate(isTokenExists.userId, {
+            confirmedEmail: true,
+        });
+
+        if (!user) {
+            throw ApiError.NotFound(USER_NOT_FOUND_TOKEN);
         }
 
-        return
+        return;
     }
 
-    async forgotPassword (options:EmailOptions): Promise<void> {
-        const { email, confirmUrl } = options
+    async forgotPassword(options: EmailOptions): Promise<void> {
+        const { email, confirmUrl } = options;
 
         const user = await UserModel.findOne({ email });
 
@@ -98,59 +103,66 @@ class AuthService {
             throw ApiError.NotFound('User with such email does not exists.');
         }
 
-        const token = await TokenService.createConfirmToken(user.id)
+        const token = await TokenService.createConfirmToken(user.id);
 
-        await EmailService.sendForgotPassEmail(email, options.confirmUrl + token)
+        await EmailService.sendForgotPassEmail(email, confirmUrl + token);
 
         return;
     }
-    async resetPassword (token:string,password:string):Promise<void> {
-        const isTokenExists = await ConfirmTokenModel.findOne({ token })
+    async resetPassword(token: string, password: string): Promise<void> {
+        const isTokenExists = await ConfirmTokenModel.findOne({ token });
 
-        if(!isTokenExists) {
-            throw ApiError.NotFound(TOKEN_NOT_FOUND)
+        if (!isTokenExists) {
+            throw ApiError.NotFound(TOKEN_NOT_FOUND);
         }
-        await ConfirmTokenModel.deleteOne({ token })
-        
-        const isValidDate = validateDate(isTokenExists.expiringDate)
- 
-        
-        if(!isValidDate) {
-            throw ApiError.BadRequest('Your token has been expired.')
+        await ConfirmTokenModel.deleteOne({ token });
+
+        const isValidDate = validateDate(isTokenExists.expiringDate);
+
+        if (!isValidDate) {
+            throw ApiError.BadRequest('Your token has been expired.');
         }
-        
+
         const hashingSalt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, hashingSalt);
-        
-        const user = await UserModel.findByIdAndUpdate(isTokenExists.userId, { password:hashedPassword })
 
-        if(!user) {
-            throw ApiError.NotFound(USER_NOT_FOUND_TOKEN)
+        const user = await UserModel.findByIdAndUpdate(isTokenExists.userId, {
+            password: hashedPassword,
+        });
+
+        if (!user) {
+            throw ApiError.NotFound(USER_NOT_FOUND_TOKEN);
         }
 
-        return
+        return;
     }
 
-    async changePassword ({ currentPassword, newPassword, id }:  PasswordsInput): Promise<void> {
-        const user = await UserModel.findById(id)
+    async changePassword({
+        currentPassword,
+        newPassword,
+        id,
+    }: PasswordsInput): Promise<void> {
+        const user = await UserModel.findById(id);
 
-        if(!user) {
-            throw ApiError.NotFound('User not found.')
+        if (!user) {
+            throw ApiError.NotFound('User not found.');
         }
-        const isValidPassword = await bcrypt.compare(currentPassword, user.password)
+        const isValidPassword = await bcrypt.compare(
+            currentPassword,
+            user.password
+        );
 
-        if(!isValidPassword) {
-            throw ApiError.BadRequest('You entered wrong password.')
+        if (!isValidPassword) {
+            throw ApiError.BadRequest('You entered wrong password.');
         }
 
-        const hashingSalt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(newPassword, hashingSalt)
+        const hashingSalt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, hashingSalt);
 
-        await UserModel.findByIdAndUpdate(id, { password: hashedPassword })
+        await UserModel.findByIdAndUpdate(id, { password: hashedPassword });
 
-        return
+        return;
     }
     // async refresh () {}
-
 }
-export default new AuthService()
+export default new AuthService();

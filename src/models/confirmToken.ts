@@ -1,16 +1,18 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
-import { Schema } from 'mongoose';
 import { User } from './user';
 import { Ref } from '@typegoose/typegoose';
-
+import { FIELD_CANNOT_BE_EMPTY } from '../constants';
 
 class confirmToken {
-    @prop({ type: String, required: true })
-    token:string
-    @prop({ type: Schema.Types.ObjectId, required: true, ref: () => User})
-    userId:Ref<User, string>
-    @prop({ type: Date, required: true })
-    expiringDate:number
+  @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('token')] })
+  token: string;
+  @prop({ required: [true, FIELD_CANNOT_BE_EMPTY('user id')], ref: () => User })
+  userId: Ref<User>;
+  @prop({
+    type: Date,
+    required: [true, FIELD_CANNOT_BE_EMPTY('expiring date')],
+  })
+  expiringDate: number;
 }
 
-export const ConfirmTokenModel = getModelForClass(confirmToken)
+export const ConfirmTokenModel = getModelForClass(confirmToken);

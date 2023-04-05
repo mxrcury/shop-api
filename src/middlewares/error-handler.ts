@@ -6,24 +6,25 @@ export default (err: express.ErrorRequestHandler, req: express.Request, res: exp
     if(process.env.NODE_ENV === 'development') {
         console.log(err)
     }
-    
-    if (err.name === 'JsonWebTokenError') {
-        res.status(401).send({
-            statusCode: 401,
-            status: 'You are not authorized.'
-        })
-    }
 
-    if (err.name === 'TokenExpiredError') {
-        res.status(401).send({
-            statusCode: 401,
-            status: 'Your token has been expired.'
-        })
+    const errors = {
+        JsonWebTokenError:() => {
+            res.status(401).send({
+                statusCode: 401,
+                status: 'You are not authorized.'
+            })
+        },
+        TokenExpiredError:() => {
+            res.status(401).send({
+                statusCode: 401,
+                status: 'Your token has been expired.'
+            })
+        },
+        CastError:() => {
+            res.status(500).send(ApiError.CastError(err))
+        }
     }
-    
-    if (err.name === 'CastError') {
-        res.status(500).send(ApiError.CastError(err))
-    }
+    if(errors[err.name]) errors[err.name]()
     
     if (err instanceof ApiError) {
         res.status(err.statusCode).send(err)
