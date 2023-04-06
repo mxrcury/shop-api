@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongoose';
 import { ShopItem } from '../models/shopItem';
 import { Tag } from '../models/tag';
 import { FiltersOptions, RegExInterface } from './common';
@@ -8,11 +9,12 @@ export enum SortByEnums {
   Quantity = 'quantity',
 }
 
-export interface PartialShopItem extends Partial<ShopItem> {}
+export interface PartialShopItem extends Partial<ShopItem> { }
 
 export interface UpdateShopItemOptions {
   id: string;
   updatedData: PartialShopItem;
+  currentUserId: ObjectId;
 }
 interface SearchTitleInterface {
   searchFilter: { title: RegExInterface };

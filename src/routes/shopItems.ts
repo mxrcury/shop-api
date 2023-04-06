@@ -7,6 +7,8 @@ import { reviewRouter } from './review';
 import { uploadShopItemPhotos } from '../middlewares/upload-files';
 import { resizeShopItemPhotos } from '../middlewares/resize-photo';
 import { paymentRouter } from './payment';
+import rightsValidation from '../middlewares/rights-validation';
+import { Roles } from '../types/users';
 
 const shopItemsRouter = express.Router();
 shopItemsRouter.use(authValidation);
@@ -16,7 +18,11 @@ shopItemsRouter.use('/', paymentRouter);
 
 shopItemsRouter.get('/', asyncWrapper(ShopItemController.getAll));
 shopItemsRouter.get('/:id', asyncWrapper(ShopItemController.getOne));
-shopItemsRouter.post('/', asyncWrapper(ShopItemController.create));
+shopItemsRouter.post(
+  '/',
+  rightsValidation(Roles.Seller),
+  asyncWrapper(ShopItemController.create)
+);
 shopItemsRouter.patch(
   '/:id',
   uploadShopItemPhotos,

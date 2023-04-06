@@ -1,10 +1,8 @@
 import { DOCUMENT_NOT_FOUND } from '../constants';
 import { ApiError } from '../exceptions/error';
 import { ShopItem, ShopItemsModel } from '../models/shopItem';
-import { RestFields } from '../types/common';
 import { ItemsResponse } from '../types/controllers';
 import {
-  PartialShopItem,
   ShopItemInput,
   ShopItemsFilterInput,
   UpdateShopItemOptions,
@@ -47,14 +45,19 @@ class ShopItemService {
   async updateShopItem({
     id,
     updatedData,
+    currentUserId,
   }: UpdateShopItemOptions): Promise<void> {
-    const shopItem = await ShopItemsModel.findByIdAndUpdate(
-      id,
-      updatedData
-    ).exec();
+    const shopItem = await ShopItemsModel.findById(id)
+      .select('authorId')
+      .exec();
 
-    if (!shopItem)
+    if (!shopItem) {
       throw ApiError.NotFound(DOCUMENT_NOT_FOUND(ShopItemsModel.modelName));
+    }
+
+    if (shopItem.authorId.id !== currentUserId) throw ApiError.Forbidden();
+
+    await ShopItemsModel.findByIdAndUpdate(id, updatedData);
 
     return;
   }

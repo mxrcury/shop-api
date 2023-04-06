@@ -44,7 +44,6 @@ class ShopItemController {
     res: express.Response
   ): ControllerResponse<void> {
     const shopItem = req.body;
-
     await ShopItemService.createShopItem({ ...shopItem, userId: req.user.id });
 
     return res.status(200).send();
@@ -56,10 +55,11 @@ class ShopItemController {
   ): ControllerResponse<void> {
     const { id } = req.params;
     const updatedData = req.body;
+    const { id: currentUserId } = req.user;
 
     if (req.files.length) updatedData.photos = req.body.images;
 
-    await ShopItemService.updateShopItem({ id, updatedData });
+    await ShopItemService.updateShopItem({ id, updatedData, currentUserId });
 
     return res.status(201).send();
   }

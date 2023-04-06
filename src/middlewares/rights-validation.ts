@@ -3,11 +3,15 @@ import { ControllerRequest } from '../types/controllers';
 import { ApiError } from '../exceptions/error';
 import { RolesType } from '../types/users';
 
-export default (...roles:RolesType[]) => {
-    return (req:ControllerRequest , res:express.Response, next:express.NextFunction) => {
-        if(!roles.includes(req.user.role)) {
-            throw ApiError.Forbidden()
+export default (...roles: RolesType[]) => {
+    return (
+        req: ControllerRequest,
+        _res: express.Response,
+        next: express.NextFunction
+    ) => {
+        if (!roles.includes(req.user.role)) {
+            throw ApiError.Forbidden();
         }
-        next()
-    }
-}
+        next();
+    };
+};
