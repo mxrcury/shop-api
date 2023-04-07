@@ -2,6 +2,7 @@ import {
   pre,
   prop,
   Ref,
+  post,
   getModelForClass,
   modelOptions,
   Severity,
@@ -11,8 +12,9 @@ import { Tag, TagModel } from './tag';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { FIELD_CANNOT_BE_EMPTY } from '../constants';
 import { Shop } from './shop';
+import { Category } from './category';
 
-@pre<ShopItem>('save', async function(next) {
+@pre<ShopItem>('save', async function (next) {
   const { firstName, lastName } = await UserModel.findById(this.authorId)
     .select('firstName lastName')
     .exec();
@@ -21,6 +23,7 @@ import { Shop } from './shop';
   this.tags = await TagModel.find({ name: { $in: this.tags } });
   next();
 })
+@post<ShopItem>('save', async function (doc) {})
 export class ShopItem extends TimeStamps {
   @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('title')] })
   title: string;
@@ -40,9 +43,17 @@ export class ShopItem extends TimeStamps {
   authorId: Ref<User>;
   @prop({ type: String, required: false })
   createdBy?: string;
-  @prop({ required: false, ref: () => Shop })
+  @prop({
+    required: [true, FIELD_CANNOT_BE_EMPTY('shop id ')],
+    ref: () => Shop,
+  })
   shopId?: Ref<Shop>;
-  @prop({ required: false, ref: () => Tag })
+  @prop({
+    required: [true, FIELD_CANNOT_BE_EMPTY('category id')],
+    ref: () => Category,
+  })
+  categoryId: string;
+  @prop({ required: false, default: [], ref: () => Tag })
   tags?: Ref<Tag>[];
   @prop({ type: Number, required: [true, FIELD_CANNOT_BE_EMPTY('price')] })
   price: number;
