@@ -1,4 +1,3 @@
-import { Shop } from '../entities/shop.entity';
 import { FiltersOptions, RegExInterface } from './common';
 
 export interface ShopFiltersInput extends FiltersOptions {
