@@ -7,7 +7,7 @@ import {
   ItemsResponse,
 } from '../types/controllers';
 
-class UsersController {
+class UserController {
   async getAll(
     req: ControllerRequest,
     res: express.Response<ItemsResponse<User>>
@@ -85,4 +85,4 @@ class UsersController {
   }
 }
 
-export default new UsersController();
+export default new UserController();

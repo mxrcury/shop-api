@@ -12,7 +12,7 @@ import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { FIELD_CANNOT_BE_EMPTY } from '../constants';
 import { Shop } from './shop';
 
-@pre<ShopItem>('save', async function (next) {
+@pre<ShopItem>('save', async function(next) {
   const { firstName, lastName } = await UserModel.findById(this.authorId)
     .select('firstName lastName')
     .exec();
@@ -21,7 +21,6 @@ import { Shop } from './shop';
   this.tags = await TagModel.find({ name: { $in: this.tags } });
   next();
 })
-// @modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class ShopItem extends TimeStamps {
   @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('title')] })
   title: string;

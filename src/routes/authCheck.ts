@@ -1,14 +1,16 @@
-import express from 'express'
-import { usersRouter } from './users'
-import { shopItemsRouter } from './shopItems'
-import { reviewRouter } from './review'
-import { shopsRouter } from './shop'
+import express from 'express';
+import { usersRouter } from './users';
+import { shopItemsRouter } from './shopItems';
+import { reviewsRouter } from './review';
+import { shopsRouter } from './shop';
+import { tagsRouter } from './tag';
 
-const authCheckRouter = express.Router()
+const authCheckRouter = express.Router();
 
-authCheckRouter.use('/users', usersRouter)
-authCheckRouter.use('/shopItems', shopItemsRouter)
-authCheckRouter.use('/reviews', reviewRouter)
-authCheckRouter.use('/shops', shopsRouter)
+authCheckRouter.use('/users', usersRouter);
+authCheckRouter.use('/shopItems', shopItemsRouter);
+authCheckRouter.use('/reviews', reviewsRouter);
+authCheckRouter.use('/shops', shopsRouter);
+authCheckRouter.use('/tags', tagsRouter);
 
-export { authCheckRouter }
+export { authCheckRouter };

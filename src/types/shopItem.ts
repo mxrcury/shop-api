@@ -16,16 +16,10 @@ export interface UpdateShopItemOptions {
   updatedData: PartialShopItem;
   currentUserId: ObjectId;
 }
-interface SearchTitleInterface {
-  searchFilter: { title: RegExInterface };
-}
 
-interface ShopItemFilters extends SearchTitleInterface {
+export interface ShopItemFilters {
   sortBy?: SortByEnums.Price | SortByEnums.CreatedAt | SortByEnums.Quantity;
-}
-
-export interface ShopItemsFilterInput extends FiltersOptions {
-  filters?: ShopItemFilters;
+  searchFilter?: { title: RegExInterface };
 }
 
 export interface ShopItemInput {

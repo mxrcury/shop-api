@@ -1,10 +1,12 @@
 import { DOCUMENT_NOT_FOUND } from '../constants';
 import { ApiError } from '../exceptions/error';
 import { ShopItem, ShopItemsModel } from '../models/shopItem';
+import { FiltersOptions } from '../types/common';
 import { ItemsResponse } from '../types/controllers';
 import {
+  ShopItemFilters,
   ShopItemInput,
-  ShopItemsFilterInput,
+  SortByEnums,
   UpdateShopItemOptions,
 } from '../types/shopItem';
 
@@ -13,9 +15,11 @@ class ShopItemService {
     page = 0,
     limit = 0,
     filters,
-  }: ShopItemsFilterInput): Promise<ItemsResponse<ShopItem>> {
-    const items = (await ShopItemsModel.find(filters.searchFilter)
-      .sort([[filters.sortBy, -1]])
+  }: FiltersOptions<ShopItemFilters>): Promise<ItemsResponse<ShopItem>> {
+    const { searchFilter, sortBy = SortByEnums.CreatedAt } = filters;
+
+    const items = (await ShopItemsModel.find(searchFilter)
+      .sort([[sortBy, -1]])
       .limit(limit)
       .skip(limit * page)
       .lean()) as ShopItem[];
