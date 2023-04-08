@@ -1,5 +1,6 @@
 import express from 'express';
 import { ApiError } from '../exceptions/error';
+import { ErrorResponse } from '../types/common';
 
 export default (
   err: express.ErrorRequestHandler,
@@ -31,16 +32,20 @@ export default (
   if (errors[err.name]) errors[err.name]();
 
   if (err instanceof ApiError) {
-    res.status(err.statusCode).send(err);
+    res.status(err.statusCode).send(createErrorResponse(err));
   }
 
   if (err instanceof Error) {
-    res.status(500).send({
-      statusCode: 500,
-      status: 'Something went wrong.',
-      errorMessage: err.message,
-    });
+    res.status(500).send(createErrorResponse(err));
   }
 
   next();
 };
+
+function createErrorResponse(err: ErrorResponse) {
+  return {
+    status: err.statusCode || err.status,
+    code: err.code || err.code,
+    message: err.errorMessage || err.message,
+  };
+}

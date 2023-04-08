@@ -9,3 +9,11 @@ export interface RegExInterface {
   $regex: string;
   $options: string;
 }
+
+export interface ErrorResponse {
+  statusCode?: number;
+  errorMessage?: string;
+  code?: string;
+  message?: string;
+  status?: number;
+}

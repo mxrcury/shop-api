@@ -25,6 +25,7 @@ shopItemsRouter.post(
 );
 shopItemsRouter.patch(
   '/:id',
+  rightsValidation(Roles.Seller, Roles.Admin),
   uploadShopItemPhotos,
   resizeShopItemPhotos,
   asyncWrapper(ShopItemController.updateOne)

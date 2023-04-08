@@ -12,20 +12,6 @@ import middlewaresInit from './middlewares';
 
 dotenv.config();
 
-// fetch('http://localhost:6969/api/shopItems', {
-//     method:'POST', body:JSON.stringify({
-//         "title": "macbook",
-//         "description": "The best computer",
-// dependencies = { "rebelo}
-//         "price": 400,
-//         "tags": [
-//             {
-//                 "name":"Tech"
-//             }
-//         ],
-//         "quantity": "1"
-// }),  headers:{"Content-type":"application/json"}})
-
 const start = async (app: express.Express, port: string | number = 7000) => {
   try {
     app.use('/public', express.static(`${path.resolve('./')}/public`));
