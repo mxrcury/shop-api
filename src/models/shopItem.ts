@@ -14,7 +14,7 @@ import { FIELD_CANNOT_BE_EMPTY } from '../constants';
 import { Shop } from './shop';
 import { Category } from './category';
 
-@pre<ShopItem>('save', async function (next) {
+@pre<ShopItem>('save', async function(next) {
   const { firstName, lastName } = await UserModel.findById(this.authorId)
     .select('firstName lastName')
     .exec();
@@ -23,13 +23,14 @@ import { Category } from './category';
   this.tags = await TagModel.find({ name: { $in: this.tags } });
   next();
 })
-@post<ShopItem>('save', async function (doc) {})
+@post<ShopItem>('save', async function(doc) { })
 export class ShopItem extends TimeStamps {
   @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('title')] })
   title: string;
   @prop({
     type: String,
     required: [true, FIELD_CANNOT_BE_EMPTY('description')],
+    unique: true,
   })
   description: string;
   @prop({ type: [String], required: [true, FIELD_CANNOT_BE_EMPTY('photos')] })

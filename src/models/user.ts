@@ -1,4 +1,5 @@
 import { getModelForClass, prop } from '@typegoose/typegoose';
+
 import { Roles, RolesType } from '../types/users';
 import validator from 'validator';
 import { FIELD_CANNOT_BE_EMPTY } from '../constants';

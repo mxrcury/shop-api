@@ -43,8 +43,12 @@ class ShopItemController {
     req: ControllerRequest,
     res: express.Response
   ): ControllerResponse<void> {
-    const shopItem = req.body;
-    await ShopItemService.createShopItem({ ...shopItem, userId: req.user.id });
+    const shopItemInput = req.body;
+
+    await ShopItemService.createShopItem({
+      ...shopItemInput,
+      userId: req.user.id,
+    });
 
     return res.status(200).send();
   }

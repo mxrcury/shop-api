@@ -27,9 +27,9 @@ class ShopController {
     req: express.Request,
     res: express.Response<void>
   ): ControllerResponse<void> {
-    const createData = req.body;
+    const shopInput = req.body;
 
-    await ShopService.createShop(createData);
+    await ShopService.createShop(shopInput);
 
     return res.status(201).send();
   }

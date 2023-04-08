@@ -56,7 +56,9 @@ class AuthService {
       throw ApiError.BadRequest('You did not entered data.');
     }
 
-    const user = await UserModel.findOne({ email }).select('+password').exec();
+    const user = await UserModel.findOne({ email })
+      .select('+password +role')
+      .exec();
 
     const userExists = user && user.email === email;
 
@@ -72,11 +74,11 @@ class AuthService {
     if (!isValidPassword) {
       throw ApiError.BadRequest('You entered wrong password.');
     }
-
     const payload = {
       id: user._id,
       role: user.role,
     };
+
     const tokens = await TokenService.generateTokens(payload);
 
     return tokens;
