@@ -26,7 +26,7 @@ export class User {
   @prop({
     type: String,
     default: Roles.Guest,
-    enum: [Roles.Admin, Roles.Guest],
+    enum: [Roles.Admin, Roles.Guest, Roles.Seller],
     select: false,
   })
   role: RolesType;
