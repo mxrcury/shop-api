@@ -19,17 +19,13 @@ class CategoryService {
     };
   }
   async createCategory(categoryInput: CategoryInput): Promise<void> {
-    const { name } = categoryInput;
+    const {
+      name,
+      status = CategoryStatus.Activated,
+      currentUserId,
+    } = categoryInput;
 
-    await CategoryModel.create({ name });
-
-    return;
-  }
-  async sendCategoryRequest(categoryInput: CategoryInput): Promise<void> {
-    await CategoryModel.create({
-      ...categoryInput,
-      status: CategoryStatus.Requested,
-    });
+    await CategoryModel.create({ name, status, currentUserId });
 
     return;
   }

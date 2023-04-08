@@ -8,6 +8,7 @@ import {
   ItemsResponse,
 } from '../types/controllers';
 import { Roles } from '../types/users';
+import { CategoryStatus } from '../types/category';
 
 class CategoryController {
   async getAll(
@@ -29,14 +30,12 @@ class CategoryController {
     const { id: currentUserId, role: currentUserRole } = req.user;
     const categoryInput = req.body;
 
-    if (currentUserRole === Roles.Admin) {
-      await CategoryService.createCategory(categoryInput);
-    } else {
-      await CategoryService.sendCategoryRequest({
-        ...categoryInput,
-        currentUserId,
-      });
+    if (currentUserRole !== Roles.Admin) {
+      categoryInput.status = CategoryStatus.Requested;
+      categoryInput.currentUserId = currentUserId;
     }
+
+    await CategoryService.createCategory(categoryInput);
 
     return res.status(201).send();
   }

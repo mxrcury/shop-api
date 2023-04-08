@@ -1,6 +1,7 @@
 export interface CategoryInput {
   name: string;
   currentUserId?: string;
+  status: CategoryStatus.Activated | CategoryStatus.Requested;
 }
 
 export enum CategoryStatus {
