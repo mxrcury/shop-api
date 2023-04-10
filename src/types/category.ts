@@ -1,14 +1,11 @@
-export interface CategoryInput {
+import { ItemStatus } from './common';
+
+export interface CategoryDto {
   name: string;
   currentUserId?: string;
-  status: CategoryStatus.Activated | CategoryStatus.Requested;
-}
-
-export enum CategoryStatus {
-  Activated = 'activated',
-  Requested = 'requested',
+  status: ItemStatus.Activated | ItemStatus.Requested;
 }
 
 export interface CategoryFilters {
-  status: CategoryStatus.Requested | CategoryStatus.Activated;
+  status: ItemStatus.Requested | ItemStatus.Activated;
 }

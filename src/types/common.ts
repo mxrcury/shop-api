@@ -17,3 +17,13 @@ export interface ErrorResponse {
   message?: string;
   status?: number;
 }
+
+export interface Timestamps {
+  createdAt: string;
+  updatedAt: string;
+}
+
+export enum ItemStatus {
+  Activated = 'activated',
+  Requested = 'requested',
+}

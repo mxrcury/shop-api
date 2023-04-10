@@ -1,7 +1,7 @@
 import { Tag, TagModel } from '../models/tag';
-import { FiltersOptions } from '../types/common';
+import { FiltersOptions, ItemStatus } from '../types/common';
 import { ItemsResponse } from '../types/controllers';
-import { TagFilters } from '../types/tag';
+import { TagDto, TagFilters } from '../types/tag';
 
 class TagService {
   async getTags({
@@ -17,6 +17,13 @@ class TagService {
     const totalCounts = await TagModel.countDocuments();
 
     return { items, totalCounts };
+  }
+  async createTag(dto: TagDto): Promise<void> {
+    const { name, status = ItemStatus.Activated, currentUserId } = dto;
+
+    await TagModel.create({ name, status, currentUserId });
+
+    return;
   }
 }
 

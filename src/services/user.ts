@@ -71,13 +71,12 @@ class UserService {
     if (password) {
       const isValidPassword = await bcrypt.compare(password, user.password);
 
-      if (!isValidPassword) {
-        throw ApiError.BadRequest('You entered wrong password.');
+      if (isValidPassword) {
+        await UserModel.findByIdAndDelete(id);
+        return;
       }
     }
-
-    await UserModel.findByIdAndDelete(id);
-    return;
+    throw ApiError.BadRequest('You entered wrong password.');
   }
 }
 

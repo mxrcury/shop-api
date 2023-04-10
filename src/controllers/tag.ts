@@ -26,6 +26,18 @@ class TagController {
 
     return res.status(200).send(tags);
   }
+  async create(
+    req: ControllerRequest,
+    res: express.Response<void>
+  ): ControllerResponse<void> {
+    const dto = req.body;
+
+    if (dto.status) dto.currentUserId = req.user.id;
+
+    await TagService.createTag(dto);
+
+    return res.status(201).send();
+  }
 }
 
 export default new TagController();

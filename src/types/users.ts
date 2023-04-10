@@ -1,3 +1,4 @@
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { User } from '../models/user';
 import { FiltersOptions } from './common';
 
@@ -13,9 +14,9 @@ export interface DeleteUserInput {
   password?: string;
 }
 
-export interface UsersFilterInput extends FiltersOptions { }
+export interface UsersFilterInput extends FiltersOptions {}
 
-export interface PartialUser extends Partial<User> { }
+export interface PartialUser extends Partial<User> {}
 
 export interface UpdateUserOptions {
   id: string;

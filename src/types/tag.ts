@@ -1,5 +1,11 @@
-import { RegExInterface } from './common';
+import { ItemStatus, RegExInterface } from './common';
 
 export interface TagFilters {
   searchFilter?: { name: RegExInterface };
+}
+
+export interface TagDto {
+  name: string;
+  status: ItemStatus.Activated | ItemStatus.Requested;
+  currentUserId?: string;
 }

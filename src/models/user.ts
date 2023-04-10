@@ -3,8 +3,9 @@ import { getModelForClass, prop } from '@typegoose/typegoose';
 import { Roles, RolesType } from '../types/users';
 import validator from 'validator';
 import { FIELD_CANNOT_BE_EMPTY } from '../constants';
+import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
-export class User {
+export class User extends TimeStamps {
   @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('first name')] })
   firstName: string;
   @prop({ type: String, required: [true, FIELD_CANNOT_BE_EMPTY('last name')] })

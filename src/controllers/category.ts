@@ -8,7 +8,7 @@ import {
   ItemsResponse,
 } from '../types/controllers';
 import { Roles } from '../types/users';
-import { CategoryStatus } from '../types/category';
+import { ItemStatus } from '../types/common';
 
 class CategoryController {
   async getAll(
@@ -31,7 +31,7 @@ class CategoryController {
     const categoryInput = req.body;
 
     if (currentUserRole !== Roles.Admin) {
-      categoryInput.status = CategoryStatus.Requested;
+      categoryInput.status = ItemStatus.Requested;
       categoryInput.currentUserId = currentUserId;
     }
 

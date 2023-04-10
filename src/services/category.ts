@@ -1,14 +1,11 @@
 import { Category, CategoryModel } from '../models/category';
-import {
-  CategoryFilters,
-  CategoryInput,
-  CategoryStatus,
-} from '../types/category';
+import { CategoryFilters, CategoryDto } from '../types/category';
+import { ItemStatus } from '../types/common';
 import { ItemsResponse } from '../types/controllers';
 
 class CategoryService {
   async getCategories({
-    status = CategoryStatus.Activated,
+    status = ItemStatus.Activated,
   }: CategoryFilters): Promise<ItemsResponse<Category>> {
     const items = await CategoryModel.find({ status });
     const totalCounts = await CategoryModel.countDocuments();
@@ -18,12 +15,8 @@ class CategoryService {
       totalCounts,
     };
   }
-  async createCategory(categoryInput: CategoryInput): Promise<void> {
-    const {
-      name,
-      status = CategoryStatus.Activated,
-      currentUserId,
-    } = categoryInput;
+  async createCategory(dto: CategoryDto): Promise<void> {
+    const { name, status = ItemStatus.Activated, currentUserId } = dto;
 
     await CategoryModel.create({ name, status, currentUserId });
 
