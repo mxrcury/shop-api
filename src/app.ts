@@ -1,5 +1,5 @@
 import express from 'express';
-import start from './src/initialize';
+import start from './initialize';
 
 const PORT = process.env.PORT;
 
