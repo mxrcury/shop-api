@@ -16,6 +16,14 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["./**/*"],
+  "exclude": [
+    "node_modules",
+    ".prettierrc",
+    ".eslintrc.js",
+    ".env",
+    ".git",
+    "docs",
+    "public"
+  ]
 }

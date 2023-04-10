@@ -25,7 +25,7 @@ const start = async (app: express.Express, port: string | number = 7000) => {
     app.use('/', templatesRouter);
     app.use('/', rootRouter);
     const swaggerOptions = swaggerJsDoc(swaggerSettings);
-    // app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerOptions));
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerOptions));
     app.use('*', notFoundRoute);
     app.use(errorHandler);
 
