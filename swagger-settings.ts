@@ -8,7 +8,7 @@ export default {
     },
     servers: [
       {
-        url: 'http://localhost:6969',
+        url: process.env.API_URL,
       },
     ],
     components: {

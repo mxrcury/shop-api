@@ -7,12 +7,12 @@ templatesRouter.get(
   async (req: express.Request, res: express.Response) => {
     const hostLink = `${req.protocol}://${req.hostname}${req.hostname === 'localhost' ? ':6969' : ''
       }/`;
-    console.log(hostLink);
+    console.log(process.env.API_URL);
     const { title, author, links } = {
       title: 'Free API for your online shop project :)',
       author: 'Dmytro Honchar ',
       links: {
-        documentation: `${hostLink}/api-docs`,
+        documentation: `${process.env.API_URL}/api-docs`,
         github: 'https://github.com/mxrcury',
         githubRepo: 'https://github.com/mxrcury/shop-api',
         linkedIn: 'https://www.linkedin.com/in/dmytro-honchar-b125a419b/',
