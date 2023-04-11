@@ -31,7 +31,6 @@ paths:
                   firstName: Harry
                   lastName: Potter
                   email: harry@hogwarts.com
-                  password: hateVoldemort
                   photo: user-6416e12e5271c2720791b393-1680448590192.jpeg
         401:
           description: Unauthorized
@@ -43,3 +42,152 @@ paths:
                 status: 401
                 code: 'UNAUTHORIZED'
                 message: 'The requested URL requires user authorization.'
+  /users/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+      summary: Find user by ID
+      description: Find and return user by specific ID.
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#definitions/user'
+              example:
+                _id: 6416e12e5271c2720791b393
+                firstName: Harry
+                lastName: Potter
+                email: harry@hogwarts.com
+                photo: user-6416e12e5271c2720791b393-1680448590192.jpeg
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 401
+                code: 'UNAUTHORIZED'
+                message: 'The requested URL requires user authorization.'
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 401
+                code: 'NOT_FOUND'
+                message: 'User was not found.'
+    patch:
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+      summary: Update user by ID
+      description: Update current user or user by ID if current user has admin role
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the user that needs to be deleted
+          type: string
+      requestBody:
+        required: true
+        description: Provide required data to update user
+        content:
+          application/json:
+            schema:
+              $ref: '#definitions/user'
+            example:
+              firstName: Harry
+              lastName: Potter
+      responses:
+        204:
+          description: No Content
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 401
+                code: 'UNAUTHORIZED'
+                message: 'The requested URL requires user authorization.'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schem:
+                $ref: '#definitions/Error'
+              example:
+                status: 403
+                code: 'FORBIDDEN'
+                message: "You don't have enough permissions for this action."
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 401
+                code: 'NOT_FOUND'
+                message: 'User was not found.'
+    delete:
+      security:
+        - bearerAuth: []
+      tags:
+        - Users
+      summary: Delete user by ID
+      description: Delete current user or user by ID if current user has admin role
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the user that needs to be deleted
+          type: string
+      responses:
+        204:
+          description: No Content
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 401
+                code: 'UNAUTHORIZED'
+                message: 'The requested URL requires user authorization.'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schem:
+                $ref: '#definitions/Error'
+              example:
+                status: 403
+                code: 'FORBIDDEN'
+                message: "You don't have enough permissions for this action."
+        404:
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 401
+                code: 'NOT_FOUND'
+                message: 'User was not found.'

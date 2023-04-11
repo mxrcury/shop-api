@@ -36,7 +36,9 @@ export class ApiError extends Error {
     return errorBadRequest;
   }
   static UnAuthorized() {
-    const error = new ApiError('You are not authorized.');
+    const error = new ApiError(
+      'The requested URL requires user authorization.'
+    );
     error.statusCode = 401;
     error.code = 'UNAUTHORIZED';
     error.errorMessage = error.message;

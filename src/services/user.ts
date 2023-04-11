@@ -41,16 +41,6 @@ class UserService {
   }
 
   async updateUser({ id, dataForUpdate }: UpdateUserOptions): Promise<void> {
-    const user = await UserModel.findByIdAndUpdate(id, dataForUpdate);
-
-    if (!user) {
-      throw ApiError.NotFound(DOCUMENT_NOT_FOUND(UserModel.modelName));
-    }
-
-    return;
-  }
-
-  async updateMe({ id, dataForUpdate }: UpdateUserOptions): Promise<void> {
     const filteredData = filterAllowedFields(dataForUpdate, allowedFields);
     const user = await UserModel.findByIdAndUpdate(id, filteredData);
 
@@ -70,14 +60,12 @@ class UserService {
 
     if (password) {
       const isValidPassword = await bcrypt.compare(password, user.password);
-
-      if (isValidPassword) {
-        await UserModel.findByIdAndDelete(id);
-        return;
-      }
+      if (!isValidPassword)
+        throw ApiError.BadRequest('You entered wrong password.'); 
+        }
+      await UserModel.findByIdAndDelete(id);
+      return;
     }
-    throw ApiError.BadRequest('You entered wrong password.');
-  }
 }
 
 export default new UserService();

@@ -22,6 +22,7 @@ export class User extends TimeStamps {
     type: String,
     required: [true, FIELD_CANNOT_BE_EMPTY('password')],
     minlength: [6, 'Your password has to be more than 6 length'],
+    select: false,
   })
   password: string;
   @prop({

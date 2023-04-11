@@ -6,6 +6,8 @@ import {
   ControllerResponse,
   ItemsResponse,
 } from '../types/controllers';
+import { Roles } from '../types/users';
+import { ApiError } from '../exceptions/error';
 
 class UserController {
   async getAll(
@@ -34,11 +36,15 @@ class UserController {
   }
 
   async updateOne(
-    req: express.Request,
+    req: ControllerRequest,
     res: express.Response<void>
   ): ControllerResponse<void> {
     const { id } = req.params;
     const dataForUpdate = req.body;
+    const { id: currentUserId, role: currentUserRole } = req.user;
+
+    if (currentUserId !== id && currentUserRole !== Roles.Admin)
+      throw ApiError.Forbidden();
 
     if (req.file) dataForUpdate.photo = req.file.filename;
 
@@ -47,39 +53,21 @@ class UserController {
     return res.status(201).send();
   }
 
-  async updateMe(
-    req: express.Request,
-    res: express.Response<void>
-  ): ControllerResponse<void> {
-    const { id } = req.params;
-    const dataForUpdate = req.body;
-
-    if (req.file) dataForUpdate.photo = req.file.filename;
-
-    await UsersService.updateMe({ id, dataForUpdate });
-
-    return res.status(201).send();
-  }
-
-  async deleteMe(
+  async deleteOne(
     req: ControllerRequest,
     res: express.Response<void>
   ): ControllerResponse<void> {
-    const { id } = req.user;
+    const { id } = req.params;
+    const { role: currentUserRole } = req.user;
     const { password } = req.body;
 
+    if (currentUserRole !== Roles.Admin) throw ApiError.Forbidden();
+
+    if (currentUserRole !== Roles.Admin && !password)
+      throw ApiError.BadRequest(
+        'You did not enter your password for confirmation.'
+      );
     await UsersService.deleteUser({ id, password });
-
-    return res.status(201).send();
-  }
-
-  async deleteOne(
-    req: express.Request,
-    res: express.Response<void>
-  ): ControllerResponse<void> {
-    const { id } = req.params;
-
-    await UsersService.deleteUser({ id });
 
     return res.status(200).send();
   }
