@@ -19,6 +19,17 @@ paths:
       description: Finds and returns an array with a list of users.
       produces:
         - application/json
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: current page of user
+          type: number
+        - name: limit
+          in: query
+          type: number
+          description: Quantity of users to get
+          required: false
       responses:
         200:
           description: OK
@@ -52,6 +63,12 @@ paths:
       description: Find and return user by specific ID.
       produces:
         - application/json
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of user
+          type: string
       responses:
         200:
           description: OK
