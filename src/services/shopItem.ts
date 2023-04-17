@@ -22,22 +22,26 @@ class ShopItemService {
       .sort([[sortBy, -1]])
       .limit(limit)
       .skip(limit * page)
-      .lean()) as ShopItem[];
+      .select('-__v')
+      .lean()
+      .exec()) as ShopItem[];
 
     const totalCounts = await ShopItemsModel.countDocuments();
+
     return { items, totalCounts };
   }
 
   async createShopItem(shopItemInput: ShopItemInput): Promise<void> {
-    const { title, price, quantity, description, userId, categoryId } =
+    const { title, price, quantity, description, categoryId, authorId, tags } =
       shopItemInput;
     await ShopItemsModel.create({
       title,
       price,
       quantity,
       description,
-      userId,
       categoryId,
+      authorId,
+      tags,
     });
     return;
   }

@@ -9,7 +9,7 @@ export enum SortByEnums {
   Quantity = 'quantity',
 }
 
-export interface PartialShopItem extends Partial<ShopItem> {}
+export interface PartialShopItem extends Partial<ShopItem> { }
 
 export interface UpdateShopItemOptions {
   id: string;
@@ -26,9 +26,9 @@ export interface ShopItemInput {
   title: string;
   description: string;
   price: number;
-  tags: Tag[];
+  tags: string[];
   quantity: number;
   createdAt: Date;
-  userId: string;
   categoryId: string;
+  authorId: string;
 }

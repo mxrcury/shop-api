@@ -47,46 +47,37 @@ paths:
                 $ref: '#/definitions/tags'
               example:
                 items:
-                  - title:
-                    description:
-                    photos:
-                    items:
-                    quantity:
-                    authorId:
-                    createdBy:
-                    shopId:
-                    categoryId:
-                    tags:
-                      -
-                      -
-                    name:
-                    totalUsedQty:
-                    status: activated
-                    userId:
-                    price:
-                    totalReviews:
-                  # - _id: 8755bc080a00adr9243df106
-                  #   name: Old-fashioned
-                  #   totalUsedQty: 12
-                  #   status: activated
+                  - _id: 643d45405bfd177ec8dfb734
+                    title: apple 1
+                    description: The best computer
+                    photos: []
+                    quantity: 1
+                    authorId: 6431be3637f5afb28633a5a8
+                    categoryId: 6431c23daa74967ae516fa17
+                    tags: []
+                    price: 400
+                    totalReviews: 0
+                    createdAt: 2023-04-17T13:10:24.304Z
+                    updatedAt: 2023-04-17T13:10:24.304Z
+                    createdBy: Mark Watney
                 totalCounts: 1
-# shopItemsRouter.use('/:shopItemId/reviews', reviewsRouter);
-# shopItemsRouter.use('/', paymentRouter);
+# shopItemsRouter.use(/:shopItemId/reviews, reviewsRouter);
+# shopItemsRouter.use(/, paymentRouter);
 #
-# shopItemsRouter.get('/', asyncWrapper(ShopItemController.getAll));
-# shopItemsRouter.get('/:id', asyncWrapper(ShopItemController.getOne));
+# shopItemsRouter.get(/, asyncWrapper(ShopItemController.getAll));
+# shopItemsRouter.get(/:id, asyncWrapper(ShopItemController.getOne));
 # shopItemsRouter.post(
-#   '/',
+#   /,
 #   rightsValidation(Roles.Seller),
 #   asyncWrapper(ShopItemController.create)
 # );
 # shopItemsRouter.patch(
-#   '/:id',
+#   /:id,
 #   rightsValidation(Roles.Seller, Roles.Admin),
 #   uploadShopItemPhotos,
 #   resizeShopItemPhotos,
 #   asyncWrapper(ShopItemController.updateOne)
 # );
-# shopItemsRouter.delete('/:id', asyncWrapper(ShopItemController.deleteOne));
+# shopItemsRouter.delete(/:id, asyncWrapper(ShopItemController.deleteOne));
 #
 #

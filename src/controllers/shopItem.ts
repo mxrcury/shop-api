@@ -52,7 +52,7 @@ class ShopItemController {
 
     await ShopItemService.createShopItem({
       ...shopItemInput,
-      userId: req.user.id,
+      authorId: req.user.id,
       categoryId,
     });
 

@@ -10,7 +10,7 @@ import { paymentRouter } from './payment';
 import rightsValidation from '../middlewares/rights-validation';
 import { Roles } from '../types/users';
 
-const shopItemsRouter = express.Router();
+const shopItemsRouter = express.Router({ mergeParams: true });
 shopItemsRouter.use(authValidation);
 
 shopItemsRouter.use('/:shopItemId/reviews', reviewsRouter);
@@ -20,7 +20,7 @@ shopItemsRouter.get('/', asyncWrapper(ShopItemController.getAll));
 shopItemsRouter.get('/:id', asyncWrapper(ShopItemController.getOne));
 shopItemsRouter.post(
   '/',
-  rightsValidation(Roles.Seller),
+  // rightsValidation(Roles.Seller),
   asyncWrapper(ShopItemController.create)
 );
 shopItemsRouter.patch(

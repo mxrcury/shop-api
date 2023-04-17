@@ -4,9 +4,9 @@ import CategoryController from '../controllers/category';
 import { asyncWrapper } from '../utils/asyncWrapper';
 import { shopItemsRouter } from './shopItems';
 
-const categoriesRouter = express.Router({ mergeParams: true });
+const categoriesRouter = express.Router();
 
-categoriesRouter.use('/categoryId?/shopItems', shopItemsRouter);
+categoriesRouter.use('/:categoryId?/shopItems', shopItemsRouter);
 
 categoriesRouter.get('/', asyncWrapper(CategoryController.getAll));
 categoriesRouter.post('/', asyncWrapper(CategoryController.create));
