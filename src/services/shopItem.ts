@@ -29,13 +29,15 @@ class ShopItemService {
   }
 
   async createShopItem(shopItemInput: ShopItemInput): Promise<void> {
-    const { title, price, quantity, description, userId } = shopItemInput;
+    const { title, price, quantity, description, userId, categoryId } =
+      shopItemInput;
     await ShopItemsModel.create({
       title,
       price,
       quantity,
       description,
       userId,
+      categoryId,
     });
     return;
   }

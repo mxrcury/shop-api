@@ -16,8 +16,12 @@ class ShopItemController {
     res: express.Response<ItemsResponse<ShopItem>>
   ): ControllerResponse<ItemsResponse<ShopItem>> {
     const { page, limit, title, sortBy } = req.query;
+    const { categoryId } = req.params;
 
-    const filters = { searchFilter: { title: getRegex(title) }, sortBy };
+    const filters = {
+      searchFilter: { title: getRegex(title), categoryId },
+      sortBy,
+    };
 
     const shopItems = await ShopItemService.getShopItems({
       page: parseInt(page),
@@ -44,10 +48,12 @@ class ShopItemController {
     res: express.Response
   ): ControllerResponse<void> {
     const shopItemInput = req.body;
+    const { categoryId } = req.params;
 
     await ShopItemService.createShopItem({
       ...shopItemInput,
       userId: req.user.id,
+      categoryId,
     });
 
     return res.status(200).send();

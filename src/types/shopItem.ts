@@ -9,7 +9,7 @@ export enum SortByEnums {
   Quantity = 'quantity',
 }
 
-export interface PartialShopItem extends Partial<ShopItem> { }
+export interface PartialShopItem extends Partial<ShopItem> {}
 
 export interface UpdateShopItemOptions {
   id: string;
@@ -19,7 +19,7 @@ export interface UpdateShopItemOptions {
 
 export interface ShopItemFilters {
   sortBy?: SortByEnums.Price | SortByEnums.CreatedAt | SortByEnums.Quantity;
-  searchFilter?: { title: RegExInterface };
+  searchFilter?: { title: RegExInterface; categoryId: string };
 }
 
 export interface ShopItemInput {
@@ -30,4 +30,5 @@ export interface ShopItemInput {
   quantity: number;
   createdAt: Date;
   userId: string;
+  categoryId: string;
 }

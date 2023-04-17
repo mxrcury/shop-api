@@ -1,0 +1,41 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    role:
+      type: apiKey
+      name: Authorization
+      in: header
+paths:
+  /categories/{categoryId}/shopItems:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Shops
+      summary: Find shops
+      description: Finds and returns an array with a list of shops.
+      produces:
+        - application/json
+# shopItemsRouter.use('/:shopItemId/reviews', reviewsRouter);
+# shopItemsRouter.use('/', paymentRouter);
+#
+# shopItemsRouter.get('/', asyncWrapper(ShopItemController.getAll));
+# shopItemsRouter.get('/:id', asyncWrapper(ShopItemController.getOne));
+# shopItemsRouter.post(
+#   '/',
+#   rightsValidation(Roles.Seller),
+#   asyncWrapper(ShopItemController.create)
+# );
+# shopItemsRouter.patch(
+#   '/:id',
+#   rightsValidation(Roles.Seller, Roles.Admin),
+#   uploadShopItemPhotos,
+#   resizeShopItemPhotos,
+#   asyncWrapper(ShopItemController.updateOne)
+# );
+# shopItemsRouter.delete('/:id', asyncWrapper(ShopItemController.deleteOne));
+#
+#
