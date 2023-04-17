@@ -78,7 +78,7 @@ paths:
       responses:
         201:
           description: No Content
-  /within/:distance/center/:latlng/unit/:unit:
+  /within/{distance}/center/{latlng}/unit/{unit}:
     get:
       security:
         - bearerAuth: []
@@ -135,7 +135,7 @@ paths:
                 status: 400
                 code: 'BAD_REQUEST'
                 message: 'You did not enter all necessary options.'
-  /distances/:latlng/unit/:unit:
+  /distances/{latlng}/unit/{unit}:
     get:
       security:
         - bearerAuth: []
