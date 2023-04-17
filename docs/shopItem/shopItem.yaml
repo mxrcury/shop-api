@@ -19,6 +19,39 @@ paths:
       description: Finds and returns an array with a list of shops.
       produces:
         - application/json
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Current page of shop items
+          type: number
+        - name: limit
+          in: query
+          required: false
+          description: Limit for shop items
+          type: number
+        - name: title
+          in: query
+          required: false
+          description: Title of shop items
+        - name: sortBy
+          in: query
+          required: false
+          description: Sort by some option
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/tags'
+              example:
+                items:
+                  # - _id: 8755bc080a00adr9243df106
+                  #   name: Old-fashioned
+                  #   totalUsedQty: 12
+                  #   status: activated
+                totalCounts: 1
 # shopItemsRouter.use('/:shopItemId/reviews', reviewsRouter);
 # shopItemsRouter.use('/', paymentRouter);
 #

@@ -20,28 +20,66 @@ definitions:
         type: string
       categoryId:
         type: string
-#
-#   @prop({ type: String, required: false })
-#   createdBy?: string;
-#
-#   @prop({
-#     required: [true, FIELD_CANNOT_BE_EMPTY('shop id ')],
-#     ref: () => Shop,
-#   })
-#   shopId?: Ref<Shop>;
-#
-#   @prop({
-#     required: [true, FIELD_CANNOT_BE_EMPTY('category id')],
-#     ref: () => Category,
-#   })
-#   categoryId: string;
-#
-#   @prop({ required: false, default: [], ref: () => Tag })
-#   tags?: Ref<Tag>[];
-#
-#   @prop({ type: Number, required: [true, FIELD_CANNOT_BE_EMPTY('price')] })
-#   price: number;
-#
-#   @prop({ type: Number, default: 0 })
-#   totalReviews: number;
-# }
+      tags:
+        type: array
+        items:
+          type: object
+          properties:
+          name:
+            type: string
+          totalUsedQty:
+            type: number
+          status:
+            type: string
+            enum:
+              - activated
+              - requested
+          userId:
+            type: string
+      price:
+        type: number
+      totalReviews:
+        type: number
+    shopItems:
+      type: array
+      items:
+        type: object
+        properties:
+          title:
+            type: string
+          description:
+            type: string
+          photos:
+            type: array
+            items:
+              type: string
+          quantity:
+            type: number
+          authorId:
+            type: string
+          createdBy:
+            type: string
+          shopId:
+            type: string
+          categoryId:
+            type: string
+          tags:
+            type: array
+            items:
+              type: object
+              properties:
+              name:
+                type: string
+              totalUsedQty:
+                type: number
+              status:
+                type: string
+                enum:
+                  - activated
+                  - requested
+              userId:
+                type: string
+          price:
+            type: number
+          totalReviews:
+            type: number
