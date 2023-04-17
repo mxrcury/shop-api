@@ -47,6 +47,24 @@ paths:
                 $ref: '#/definitions/tags'
               example:
                 items:
+                  - title:
+                    description:
+                    photos:
+                    items:
+                    quantity:
+                    authorId:
+                    createdBy:
+                    shopId:
+                    categoryId:
+                    tags:
+                      -
+                      -
+                    name:
+                    totalUsedQty:
+                    status: activated
+                    userId:
+                    price:
+                    totalReviews:
                   # - _id: 8755bc080a00adr9243df106
                   #   name: Old-fashioned
                   #   totalUsedQty: 12
