@@ -30,17 +30,17 @@ templatesRouter.get(
     });
   }
 );
-templatesRouter.get(
-  '/docs',
-  async (req: express.Request, res: express.Response) => {
-    const hostLink = `${req.protocol}://${req.hostname}:6969/`;
-
-    res.status(200).render('docs', {
-      links: {
-        host: hostLink,
-      },
-    });
-  }
-);
+// templatesRouter.get(
+//   '/docs',
+//   async (req: express.Request, res: express.Response) => {
+//     const hostLink = `${req.protocol}://${req.hostname}:6969/`;
+//
+//     res.status(200).render('docs', {
+//       links: {
+//         host: hostLink,
+//       },
+//     });
+//   }
+// );
 
 export { templatesRouter };

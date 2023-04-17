@@ -1,0 +1,65 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    role:
+      type: apiKey
+      name: Authorization
+      in: header
+paths:
+  /categories:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Category
+      summary: Find categories
+      description: Finds and returns an array with a list of categories.
+      produces:
+        - application/json
+      parameters:
+        - name: status
+          in: query
+          required: false
+          description: Status of getting categories
+          type: string
+          enum:
+            - activated
+            - requested
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/categories'
+              example:
+                items:
+                  - _id: 8755bc080a00adr9243df106
+                    name: Technologies
+                    totalShopItems: 1
+                    status: activated
+                totalCounts: 1
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Category
+      summary: Create category
+      description: Create a new category
+      produces:
+        - application/json
+      requestBody:
+        required: false
+        description: Name for category
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/category'
+            example:
+              name: Technologies
+      responses:
+        201:
+          description: No Content

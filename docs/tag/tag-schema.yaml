@@ -1,0 +1,32 @@
+definitions:
+  tags:
+    type: object
+    properties:
+    items:
+      type: array
+      items:
+        name:
+          type: string
+        totalUsedQty:
+          type: number
+        status:
+          type: string
+          enum:
+            - activated
+            - requested
+        userId:
+          type: string
+  tag:
+    type: object
+    properties:
+      name:
+        type: string
+      totalUsedQty:
+        type: number
+      status:
+        type: string
+        enum:
+          - activated
+          - requested
+      userId:
+        type: string

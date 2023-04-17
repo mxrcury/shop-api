@@ -1,0 +1,31 @@
+definitions:
+  categories:
+    type: array
+    items:
+      type: object
+      parameters:
+        name:
+          type: string
+        totalShopItems:
+          type: number
+        status:
+          type: string
+          enum:
+            - activated
+            - requested
+        userId:
+          type: string
+  category:
+    type: object
+    parameters:
+      name:
+        type: string
+      totalShopItems:
+        type: number
+      status:
+        type: string
+        enum:
+          - activated
+          - requested
+      userId:
+        type: string

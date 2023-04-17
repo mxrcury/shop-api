@@ -1,0 +1,87 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    role:
+      type: apiKey
+      name: Authorization
+      in: header
+paths:
+  /auth/signup:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Authenthication
+      summary: Sign up
+      description: Sign up a user
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to sign up
+        content:
+          application/json:
+            schema:
+              $ref: '#definitions/user'
+            example:
+              firstName: Harry
+              lastName: Potter
+              email: potter@hogwarts.com
+              password: hatevolandemort
+              passwordConfirmed: hatevolandemort
+      responses:
+        201:
+          description: No Content
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 401
+                code: 'BAD_REQUEST'
+                message: 'User with this email already exists'
+  /auth/login:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Authenthication
+      summary: Log in
+      description: Log in an account
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Provide required data to log in
+        content:
+          application/json:
+            schema:
+              $ref: '#definitions/user'
+            example:
+              email: potter@hogwarts.com
+              password: hatevolandemort
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#definitions/user'
+              example:
+                accessToken: dsadsakdjasdsa-dsad-qwd-qwd2-dqwdwq
+                refreshToken: dsadasdmlk3213-321dwsd321-dwddwqd#
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 400
+                code: 'BAD_REQUEST'
+                message: 'User with this email already exists'

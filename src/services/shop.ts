@@ -1,7 +1,13 @@
 import { ApiError } from '../exceptions/error';
 import { ShopsModel, Shop } from '../models/shop';
 import { ItemsResponse } from '../types/controllers';
-import { DistancesInput, ShopFiltersInput, WithinInput } from '../types/shop';
+import {
+  CreateShopDto,
+  DistancesInput,
+  ShopFiltersInput,
+  Units,
+  WithinInput,
+} from '../types/shop';
 
 class ShopService {
   async getShops({
@@ -23,13 +29,7 @@ class ShopService {
     };
   }
 
-  async createShop({
-    name,
-    location,
-  }: {
-    name: string;
-    location: string;
-  }): Promise<void> {
+  async createShop({ name, location }: CreateShopDto): Promise<void> {
     await ShopsModel.create({ name, location });
 
     return;
@@ -39,7 +39,7 @@ class ShopService {
     distance,
     lat,
     lng,
-    unit,
+    unit = Units.Km,
   }: WithinInput): Promise<ItemsResponse<Shop>> {
     if (!distance || !lat || !lng || !unit) {
       throw ApiError.BadRequest('You did not enter all necessary options.');
@@ -65,7 +65,7 @@ class ShopService {
   async getShopsDistances({
     lat,
     lng,
-    unit,
+    unit = Units.Km,
   }: DistancesInput): Promise<ItemsResponse<Shop>> {
     if (!lat || !lng || !unit) {
       throw ApiError.BadRequest('You did not enter all necessary options.');

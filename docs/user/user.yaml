@@ -38,11 +38,13 @@ paths:
               schema:
                 $ref: '#/definitions/users'
               example:
-                - _id: 6416e12e5271c2720791b393
-                  firstName: Harry
-                  lastName: Potter
-                  email: harry@hogwarts.com
-                  photo: user-6416e12e5271c2720791b393-1680448590192.jpeg
+                items:
+                  - _id: 6416e12e5271c2720791b393
+                    firstName: Harry
+                    lastName: Potter
+                    email: harry@hogwarts.com
+                    photo: user-6416e12e5271c2720791b393-1680448590192.jpeg
+                totalCounts: 1
         401:
           description: Unauthorized
           content:

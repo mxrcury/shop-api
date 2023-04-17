@@ -27,12 +27,12 @@ class CategoryController {
     req: ControllerRequest,
     res: express.Response<void>
   ): ControllerResponse<void> {
-    const { id: currentUserId, role: currentUserRole } = req.user;
+    const { id: userId, role: userRole } = req.user;
     const categoryInput = req.body;
 
-    if (currentUserRole !== Roles.Admin) {
+    if (userRole !== Roles.Admin) {
       categoryInput.status = ItemStatus.Requested;
-      categoryInput.currentUserId = currentUserId;
+      categoryInput.currentUserId = userId;
     }
 
     await CategoryService.createCategory(categoryInput);

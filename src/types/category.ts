@@ -2,7 +2,7 @@ import { ItemStatus } from './common';
 
 export interface CategoryDto {
   name: string;
-  currentUserId?: string;
+  userId?: string;
   status: ItemStatus.Activated | ItemStatus.Requested;
 }
 

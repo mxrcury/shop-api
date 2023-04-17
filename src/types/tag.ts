@@ -7,5 +7,5 @@ export interface TagFilters {
 export interface TagDto {
   name: string;
   status: ItemStatus.Activated | ItemStatus.Requested;
-  currentUserId?: string;
+  userId?: string;
 }

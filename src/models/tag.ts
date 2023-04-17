@@ -10,8 +10,10 @@ export class Tag {
     unique: true,
   })
   name: string;
+
   @prop({ type: Number, required: false, default: 0 })
   totalUsedQty: number;
+
   @prop({
     type: String,
     required: false,
@@ -19,8 +21,9 @@ export class Tag {
     enum: [ItemStatus.Activated, ItemStatus.Requested],
   })
   status: ItemStatus.Requested | ItemStatus.Activated;
+
   @prop({ type: String, required: false, ref: () => User })
-  currentUserId?: string;
+  userId?: string;
 }
 
 export const TagModel = getModelForClass(Tag);

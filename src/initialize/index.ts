@@ -24,19 +24,22 @@ const start = async (app: express.Express, port: string | number = 7000) => {
 
     app.use('/', templatesRouter);
     app.use('/', rootRouter);
+
     const swaggerOptions = swaggerJsDoc(swaggerSettings);
     app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerOptions));
+
     app.use('*', notFoundRoute);
     app.use(errorHandler);
 
-    await mongoose.connect(
-      process.env.DB.replace('<PASSWORD>', process.env.DB_PASS),
-      {
-        retryWrites: true,
-        monitorCommands: true,
-      }
-    );
+    // await mongoose.connect(
+    //   process.env.DB.replace('<PASSWORD>', process.env.DB_PASS),
+    //   {
+    //     retryWrites: true,
+    //     monitorCommands: true,
+    //   }
+    // );
     console.log(`Successfully connected to MongoDB `);
+
     app.listen(port, () => console.log(`Server started on ${port}`));
   } catch (error) {
     console.log('!\nApplication initializing error\n ->', error, '\n<-');

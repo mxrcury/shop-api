@@ -1,0 +1,45 @@
+definitions:
+  shop:
+    type: object
+    properties:
+      name:
+        type: string
+      averageRating:
+        type: number
+      location:
+        type: object
+        properties:
+          type: string
+          enum:
+            - Point
+          coordinates:
+            type: array
+            items:
+              type: number
+          address:
+            type: string
+          description:
+            type: string
+  shops:
+    type: array
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+        averageRating:
+          type: number
+        location:
+          type: object
+          properties:
+            type: string
+            enum:
+              - Point
+            coordinates:
+              type: array
+              items:
+                type: number
+            address:
+              type: string
+            description:
+              type: string

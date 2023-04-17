@@ -19,9 +19,9 @@ class TagService {
     return { items, totalCounts };
   }
   async createTag(dto: TagDto): Promise<void> {
-    const { name, status = ItemStatus.Activated, currentUserId } = dto;
+    const { name, status = ItemStatus.Activated, userId } = dto;
 
-    await TagModel.create({ name, status, currentUserId });
+    await TagModel.create({ name, status, userId });
 
     return;
   }

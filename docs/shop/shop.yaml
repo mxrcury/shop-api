@@ -1,0 +1,189 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    role:
+      type: apiKey
+      name: Authorization
+      in: header
+paths:
+  /shops:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Shops
+      summary: Find shops
+      description: Finds and returns an array with a list of shops.
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Current page of shops
+          type: number
+        - name: limit
+          in: query
+          required: false
+          description: Limit for shops
+          type: number
+        - name: name
+          in: query
+          required: false
+          description: Name of shops
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/shops'
+              example:
+                items:
+                  - _id: 8755bc080a00adr9243df106
+                    name: Nike
+                    averageRating: 4.5
+                    location:
+                      type: Point
+                      coordinates: [40, 23]
+                      address: 'New York, Green street, 12'
+                      description: 'United States of America, New York City, Green street, 12, 569021'
+                totalCounts: 1
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Shops
+      summary: Create shop
+      description: Creat a new shop.
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: In
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/shop'
+            example:
+              name: Nike
+              location:
+                type: Point
+                coordinates: [40, 23]
+                address: 'New York, Green street, 12'
+                description: 'United States of America, New York City, Green street, 12, 569021'
+      responses:
+        201:
+          description: No Content
+  /within/:distance/center/:latlng/unit/:unit:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Shops
+      summary: Get shops within distances
+      description: Getting shops within distance from some point
+      produces:
+        - application/json
+      parameters:
+        - name: distance
+          in: path
+          required: true
+          description: Distance to close shops
+          type: string
+        - name: latlng
+          in: path
+          required: true
+          description: Latitude and longtitude of current point
+          type: string
+        - name: unit
+          in: path
+          required: false
+          description: Unit for measuring
+          type: string
+          enum:
+            - km
+            - mi
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/shops'
+              example:
+                items:
+                  - _id: 8755bc080a00adr9243df106
+                    name: Nike
+                    averageRating: 4.5
+                    location:
+                      type: Point
+                      coordinates: [40, 23]
+                      address: 'New York, Green street, 12'
+                      description: 'United States of America, New York City, Green street, 12, 569021'
+                totalCounts: 1
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 400
+                code: 'BAD_REQUEST'
+                message: 'You did not enter all necessary options.'
+  /distances/:latlng/unit/:unit:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Shops
+      summary: Get distance to shops
+      description: Getting distance from some position to all shops
+      produces:
+        - application/json
+      parameters:
+        - name: latlng
+          in: path
+          required: true
+          description: Latitude and longtitude of current point
+          type: string
+        - name: unit
+          in: path
+          required: false
+          description: Unit for measuring
+          type: string
+          enum:
+            - km
+            - mi
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/shops'
+              example:
+                items:
+                  - _id: 8755bc080a00adr9243df106
+                    name: Nike
+                    averageRating: 4.5
+                    location:
+                      type: Point
+                      coordinates: [40, 23]
+                      address: 'New York, Green street, 12'
+                      description: 'United States of America, New York City, Green street, 12, 569021'
+                totalCounts: 1
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/Error'
+              example:
+                status: 400
+                code: 'BAD_REQUEST'
+                message: 'You did not enter all necessary options.'

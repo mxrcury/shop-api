@@ -1,3 +1,4 @@
+import { Location } from '../models/shop';
 import { FiltersOptions, RegExInterface } from './common';
 
 export interface ShopFiltersInput extends FiltersOptions {
@@ -5,7 +6,7 @@ export interface ShopFiltersInput extends FiltersOptions {
 }
 
 export interface GeoOptions {
-  unit: Units.Mi | Units.Km;
+  unit?: Units.Mi | Units.Km;
 }
 
 export interface WithinParams extends GeoOptions {
@@ -31,4 +32,9 @@ export interface DistancesInput extends GeoOptions {
 export enum Units {
   Mi = 'mi',
   Km = 'km',
+}
+
+export interface CreateShopDto {
+  name: string;
+  location: Location;
 }

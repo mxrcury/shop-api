@@ -11,8 +11,10 @@ export class Category {
     unique: true,
   })
   name: string;
+
   @prop({ type: Number, required: false, default: 0 })
   totalShopItems: number;
+
   @prop({
     type: String,
     required: false,
@@ -20,8 +22,9 @@ export class Category {
     enum: [ItemStatus.Activated, ItemStatus.Requested],
   })
   status: ItemStatus.Requested | ItemStatus.Activated;
+
   @prop({ type: String, required: false, ref: () => User })
-  currentUserId?: string;
+  userId?: string;
 }
 
 export const CategoryModel = getModelForClass(Category);

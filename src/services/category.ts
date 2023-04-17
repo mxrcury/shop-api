@@ -16,9 +16,9 @@ class CategoryService {
     };
   }
   async createCategory(dto: CategoryDto): Promise<void> {
-    const { name, status = ItemStatus.Activated, currentUserId } = dto;
+    const { name, status = ItemStatus.Activated, userId } = dto;
 
-    await CategoryModel.create({ name, status, currentUserId });
+    await CategoryModel.create({ name, status, userId });
 
     return;
   }

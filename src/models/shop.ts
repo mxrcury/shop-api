@@ -1,7 +1,7 @@
 import { prop, getModelForClass, index } from '@typegoose/typegoose';
 import { FIELD_CANNOT_BE_EMPTY } from '../constants';
 
-class Location {
+export class Location {
   @prop({ type: String, default: 'Point', enum: ['Point'] })
   type: string;
   @prop({

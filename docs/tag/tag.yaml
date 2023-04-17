@@ -1,0 +1,71 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    role:
+      type: apiKey
+      name: Authorization
+      in: header
+paths:
+  /tags:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - Tags
+      summary: Find all tags
+      description: Finds and returns an array with a list of tags.
+      produces:
+        - application/json
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: Current page of tags
+          type: number
+        - name: limit
+          in: query
+          required: false
+          description: Limit for tags
+          type: number
+        - name: name
+          in: query
+          required: false
+          description: Name of tags
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/tags'
+              example:
+                items:
+                  - _id: 8755bc080a00adr9243df106
+                    name: Old-fashioned
+                    totalUsedQty: 12
+                    status: activated
+                totalCounts: 1
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - Tags
+      summary: Create tag
+      description: Create a new tag
+      produces:
+        - application/json
+      requestBody:
+        required: true
+        description: Name for tag
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/tag'
+            example:
+              name: Old-fashioned
+      responses:
+        201:
+          description: Created

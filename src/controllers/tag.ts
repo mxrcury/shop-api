@@ -1,12 +1,14 @@
 import express from 'express';
 import { Tag } from '../models/tag';
 import TagService from '../services/tag';
+import { ItemStatus } from '../types/common';
 
 import {
   ControllerRequest,
   ControllerResponse,
   ItemsResponse,
 } from '../types/controllers';
+import { Roles } from '../types/users';
 import getRegex from '../utils/getRegex';
 
 class TagController {
@@ -30,9 +32,14 @@ class TagController {
     req: ControllerRequest,
     res: express.Response<void>
   ): ControllerResponse<void> {
+    const { id: userId, role: userRole } = req.user;
     const dto = req.body;
 
-    if (dto.status) dto.currentUserId = req.user.id;
+    if (userRole !== Roles.Admin) {
+      dto.status = ItemStatus.Requested;
+      dto.userId = userId;
+    }
+    // if (dto.status) dto.userId = req.user.id;
 
     await TagService.createTag(dto);
 
